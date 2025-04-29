@@ -1,0 +1,41 @@
+{
+  "compilerOptions": {
+    // Output settings
+    "outDir": "./dist",
+    "declaration": true,
+    "declarationMap": true,
+    "emitDeclarationOnly": false,
+    "sourceMap": true,
+    // Module settings
+    "module": "ESNext",
+    "target": "ESNext",
+    "moduleResolution": "Node",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    // Language features
+    "lib": [
+      "ESNext",
+      "DOM"
+    ],
+    "jsx": "react-jsx",
+    "allowJs": false, // Only .ts/.tsx files
+    "noEmitOnError": true,
+    // Strictness
+    "strict": true,
+    "noFallthroughCasesInSwitch": true,
+    // Cleaner output
+    "verbatimModuleSyntax": true,
+    // Index Signature options
+    "noPropertyAccessFromIndexSignature": false
+  },
+  "include": [
+    "./**/*.ts"
+  ],
+  "exclude": [
+    "dist",
+    "node_modules",
+    "**/*.test.ts"
+  ]
+}
