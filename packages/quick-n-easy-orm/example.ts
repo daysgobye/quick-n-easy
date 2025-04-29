@@ -1,6 +1,4 @@
-import { Database } from "bun:sqlite";
-import { AdminUI } from "./adminUi";
-import { type DatabaseDeclaration, SimpleORM } from "./simpleOrm";
+import { type DatabaseDeclaration, QuickNEasyORM } from "./quickNEasyOrm";
 import { createBunSqliteDB } from "./shims/bunSqliteShim";
 
 // const db = new Database(":memory:");
@@ -25,7 +23,7 @@ const dbDeclaration: DatabaseDeclaration = {
 };
 
 // --- INIT ORM ---
-const orm = new SimpleORM(db, dbDeclaration);
+const orm = new QuickNEasyORM(db, dbDeclaration);
 
 // --- EXAMPLE WORKFLOW ---
 async function runExample() {

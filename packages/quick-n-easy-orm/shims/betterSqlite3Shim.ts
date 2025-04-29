@@ -1,4 +1,4 @@
-import type { GenericDB } from "../simpleOrm";
+import type { GenericDB } from "../quickNEasyOrm";
 import Database from 'better-sqlite3';
 
 

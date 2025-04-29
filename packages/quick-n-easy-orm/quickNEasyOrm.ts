@@ -225,7 +225,7 @@ function prepareRecordForStorage(tableDecl: TableDeclaration, record: any): any 
     return prepared;
 }
 
-export class SimpleORM {
+export class QuickNEasyORM {
     private db: GenericDB;
     private declaration: DatabaseDeclaration;
 

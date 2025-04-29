@@ -1,10 +1,10 @@
 import { describe, expect, test, beforeEach, afterEach } from "bun:test";
-import { SimpleORM, type DatabaseDeclaration, type GenericDB } from "./simpleOrm";
+import { QuickNEasyORM, type DatabaseDeclaration, type GenericDB } from "./quickNEasyOrm";
 import { createBunSqliteDB } from "./shims/bunSqliteShim";
 
 describe("SimpleORM", () => {
     let db: GenericDB;
-    let orm: SimpleORM;
+    let orm: QuickNEasyORM;
     let userId: string;
     let postId: string;
 
@@ -28,7 +28,7 @@ describe("SimpleORM", () => {
         // Create in-memory SQLite database
         db = createBunSqliteDB(":memory:")
 
-        orm = new SimpleORM(db, dbDeclaration);
+        orm = new QuickNEasyORM(db, dbDeclaration);
     });
 
     // Cleanup after each test

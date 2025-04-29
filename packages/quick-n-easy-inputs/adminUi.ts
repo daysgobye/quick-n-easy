@@ -1,4 +1,4 @@
-import type { ColumnType, SimpleORM, DatabaseDeclaration, DbRecord } from "./simpleOrm";
+import type { ColumnType, SimpleORM, DatabaseDeclaration, DbRecord } from "quick-n-easy-orm/quickNEasyOrm";
 
 export type RendererFunc = (
     columnName: string,

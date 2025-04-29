@@ -1,0 +1,64 @@
+{
+  "name": "quick-n-easy-orm",
+  "version": "0.9.0",
+  "description": "A simple ORM package.",
+  "author": "Cole Smith",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/daysgobye/quick-n-easy/packages/quick-n-easy-orm"
+  },
+  "bugs": {
+    "url": "https://github.com/username/repository-name/issues"
+  },
+  "homepage": "https://github.com/daysgobye/quick-n-easy/packages/quick-n-easy-orm#readme",
+  "exports": {
+    "./quickNEasyOrm": {
+      "import": "./dist/quickNEasyOrm.js",
+      "require": "./dist/quickNEasyOrm.js",
+      "types": "./dist/quickNEasyOrm.d.ts"
+    },
+    "./shims/bunSqliteShim": {
+      "import": "./dist/shims/bunSqliteShim.js",
+      "require": "./dist/shims/bunSqliteShim.js",
+      "types": "./dist/shims/bunSqliteShim.d.ts"
+    },
+    "./shims/betterSqlite3Shim": {
+      "import": "./dist/shims/betterSqlite3Shim.js",
+      "require": "./dist/shims/betterSqlite3Shim.js",
+      "types": "./dist/shims/betterSqlite3Shim.d.ts"
+    },
+    "./shims/d1Shim": {
+      "import": "./dist/shims/d1Shim.js",
+      "require": "./dist/shims/d1Shim.js",
+      "types": "./dist/shims/d1Shim.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "clean": "rm -rf dist",
+    "build": "bun run clean && tsc",
+    "dev": "bun run example.ts",
+    "test": "bun test"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/better-sqlite3": "^7.6.13",
+    "better-sqlite3": "^11.9.1"
+  },
+  "keywords": [
+    "orm",
+    "database",
+    "simple"
+  ]
+}

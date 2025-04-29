@@ -1,4 +1,4 @@
-import type { GenericDB } from "../simpleOrm";
+import type { GenericDB } from "../quickNEasyOrm";
 
 export function createD1DB(d1db: any): GenericDB {
     return {

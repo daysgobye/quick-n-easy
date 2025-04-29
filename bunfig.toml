@@ -1,0 +1,12 @@
+# Bun workspace configuration
+
+[install]
+frozen = false
+
+# Enable workspaces feature
+[install.scopes]
+workspaces = true
+
+# Ensure packages can access each other during development
+[install.cache]
+shared = true

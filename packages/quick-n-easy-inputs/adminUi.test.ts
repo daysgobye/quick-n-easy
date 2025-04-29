@@ -1,8 +1,8 @@
 import { describe, expect, test } from "bun:test";
 import { AdminUI } from "./adminUi";
 
-import { SimpleORM, type DatabaseDeclaration } from "./simpleOrm";
-import { createBunSqliteDB } from "./shims/bunSqliteShim";
+import { SimpleORM, type DatabaseDeclaration } from "quick-n-easy-orm/quickNEasyOrm";
+import { createBunSqliteDB } from "quick-n-easy-orm/shims/bunSqliteShim";
 
 const dbDeclaration: DatabaseDeclaration = {
     post: {

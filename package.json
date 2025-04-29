@@ -1,66 +1,19 @@
 {
-  "name": "dead-simple-orm",
-  "version": "1.0.8",
-  "description": "A simple ORM package.",
-  "author": "Your Name",
-  "license": "MIT",
-  "type": "module",
-  "main": "./dist/index.js",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "exports": {
-    ".": {
-      "import": "./dist/index.js",
-      "require": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+    "name": "quick-n-easy",
+    "version": "1.0.0",
+    "description": "Monorepo for quick-n-easy packages",
+    "author": "Cole Smith",
+    "license": "MIT",
+    "private": true,
+    "workspaces": [
+        "packages/*"
+    ],
+    "scripts": {
+        "build": "bun run build --workspaces",
+        "clean": "bun run clean --workspaces",
+        "test": "bun test --workspaces"
     },
-    "./adminUi": {
-      "import": "./dist/adminUi.js",
-      "require": "./dist/adminUi.js",
-      "types": "./dist/adminUi.d.ts"
-    },
-    "./simpleOrm": {
-      "import": "./dist/simpleOrm.js",
-      "require": "./dist/simpleOrm.js",
-      "types": "./dist/simpleOrm.d.ts"
-    },
-    "./shims/bunSqliteShim": {
-      "import": "./dist/shims/bunSqliteShim.js",
-      "require": "./dist/shims/bunSqliteShim.js",
-      "types": "./dist/shims/bunSqliteShim.d.ts"
-    },
-    "./shims/betterSqlite3Shim": {
-      "import": "./dist/shims/betterSqlite3Shim.js",
-      "require": "./dist/shims/betterSqlite3Shim.js",
-      "types": "./dist/shims/betterSqlite3Shim.d.ts"
-    },
-    "./shims/d1Shim": {
-      "import": "./dist/shims/d1Shim.js",
-      "require": "./dist/shims/d1Shim.js",
-      "types": "./dist/shims/d1Shim.d.ts"
+    "devDependencies": {
+        "typescript": "^5.0.0"
     }
-  },
-  "files": [
-    "dist"
-  ],
-  "scripts": {
-    "clean": "rm -rf dist",
-    "build": "npm run clean && tsc",
-    "dev": "bun run example.ts",
-    "test": "bun test"
-  },
-  "peerDependencies": {
-    "typescript": "^5.0.0"
-  },
-  "dependencies": {},
-  "devDependencies": {
-    "@types/bun": "latest",
-    "@types/better-sqlite3": "^7.6.13",
-    "better-sqlite3": "^11.9.1"
-  },
-  "keywords": [
-    "orm",
-    "database",
-    "simple"
-  ]
 }

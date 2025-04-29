@@ -1,5 +1,5 @@
 import { Database } from "bun:sqlite";
-import type { GenericDB } from "../simpleOrm";
+import type { GenericDB } from "../quickNEasyOrm";
 
 export function createBunSqliteDB(...args: any[]): GenericDB {
     const db = new Database(...args);
