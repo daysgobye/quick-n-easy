@@ -1,6 +1,6 @@
-# SimpleORM: The "You're Doing It Wrong" ORM
+# Quick N Easy ORM: The SUPER FUCKING EZ ORM for SQlite
 
-So you’re here because you need an ORM that won’t put you to sleep with complexity, huh? Well, lucky for you, you’ve found it. SimpleORM is for those who don’t have time to mess around with 3 million files, 42 classes, and endless configuration. You want something that works, right now. If you think this ORM won’t work for you, you're probably wrong—but that’s just because your side project is never going to hit 5 users anyway. So whatever, it’s fine. You’ll be fine with this.
+So you’re here because you need an ORM that won’t put you to sleep with complexity, huh? Well, lucky for you, you’ve found it. QuickNEasyORM is for those who don’t have time to mess around with 3 million files, 42 classes, and endless configuration. You want something that works, right now. If you think this ORM won’t work for you, you're probably wrong—but that’s just because your side project is never going to hit 5 users anyway. So whatever, it’s fine. You’ll be fine with this.
 
 ## The Goal? Get From 0 to 1, Fast.
 
@@ -9,7 +9,7 @@ Do you really want to spend 2 hours setting up an entity? A schema? A migrations
 ### Compare to the Other ORMs
 
 Let’s talk about the competition. You know, the other ORMs out there that require so much setup, it feels like you’re building an entire app just to add a new table? Here's how that looks:
-
+```
 .
 ├── .dbpackage
 └── src/
@@ -22,14 +22,20 @@ Let’s talk about the competition. You know, the other ORMs out there that requ
     ├── lib/
     │   └── db.ts
     └── index.ts
-
-In contrast, here’s what you’ll be doing with SimpleORM:
+```
+In contrast, here’s what you’ll be doing with QuickNEasyORM:
 
 ```js
-import { type DatabaseDeclaration, SimpleORM } from "./simpleOrm";
-import { createBunSqliteDB } from "./bunSqliteShim";
+import { type DatabaseDeclaration, QuickNEasyORM } from "quick-n-easy-orm";
+// bun
+import { createDB } from "quick-n-easy-orm/shims/bunSqliteShim";
+// node
+// import { createDB } from "quick-n-easy-orm/shims/betterSqlite3Shim";
+// D1
+// import { createDB } from "quick-n-easy-orm/shims/d1Shim";
 
-const db = createBunSqliteDB(":memory:");
+
+const db = createDB(":memory:");
 
 // --- DECLARATION ---
 const dbDeclaration: DatabaseDeclaration = {
@@ -47,7 +53,7 @@ const dbDeclaration: DatabaseDeclaration = {
 };
 
 // --- INIT ORM ---
-export const orm = new SimpleORM(db, dbDeclaration);
+export const orm = new QuickNEasyORM(db, dbDeclaration);
 
 // --- INDEX.TS---
 // in your app doing real work solving a problem no one needed soved
@@ -73,15 +79,15 @@ And that’s it. One DB file, one import, and you're querying away. No need for 
 
 ### Filters & Pagination? Who Cares?
 
-If you're worried about filtering or pagination in SQL, maybe this isn’t for you. Oh wait, did you really just say "pagination"? Buddy, **you're not going to have so many rows that you can’t filter them in JavaScript**. Because if you could, you wouldn’t be here looking for **SimpleORM**, right? You’re looking for something light and fast, not a bloated mess of features you’ll never need.
+If you're worried about filtering or pagination in SQL, maybe this isn’t for you. Oh wait, did you really just say "pagination"? Buddy, **you're not going to have so many rows that you can’t filter them in JavaScript**. Because if you could, you wouldn’t be here looking for **QuickNEasyORM**, right? You’re looking for something light and fast, not a bloated mess of features you’ll never need.
 
 ### You Know SQL? You Don’t Need to Know This Package.
 
-If you’re one of those people who thinks "SQL is the only way", don’t even bother. This package is made for **people who don’t know SQL**, and that’s perfectly fine. You know what you shouldn’t be doing? Writing classes to create `list()`, `get()`, `insert()`, `update()` functions. You know what’s better? **Letting SimpleORM do all that for you**. It's called productivity.
+If you’re one of those people who thinks "SQL is the only way", don’t even bother. This package is made for **people who don’t know SQL**, and that’s perfectly fine. You know what you shouldn’t be doing? Writing classes to create `list()`, `get()`, `insert()`, `update()` functions. You know what’s better? **Letting QuickNEasyORM do all that for you**. It's called productivity.
 
 ### N+1 Query Problem? Yep, It's Here. And We Don’t Care.
 
-Oh, the **N+1 query problem**? Yeah, it's there. And guess what? We don’t care. Why? Because **nobody’s using your app anyway**. But if you’ve got real users and that N+1 problem is giving you a headache? Hey, congratulations. You've got a *good problem*. Go upgrade to something fancier, like Drizzle. SimpleORM? It’s for people who don’t want to deal with over-engineering their app. It’s quick, it’s dirty, and it **works**.
+Oh, the **N+1 query problem**? Yeah, it's there. And guess what? We don’t care. Why? Because **nobody’s using your app anyway**. But if you’ve got real users and that N+1 problem is giving you a headache? Hey, congratulations. You've got a *good problem*. Go upgrade to something fancier, like Drizzle. QuickNEasyORM? It’s for people who don’t want to deal with over-engineering their app. It’s quick, it’s dirty, and it **works**.
 
 ### Column Types: The Basics
 
@@ -125,7 +131,7 @@ This is a *super simple* ORM, people. It does its job. No need to make it compli
 
 ### The Big Picture: Simple ORM = No BS
 
-In the end, if SimpleORM is causing problems in your app? **Good job!** You’ve got users. You’ve succeeded. Now go upgrade to something more powerful, like Drizzle. SimpleORM got you from point A to point B fast—and that’s the point.
+In the end, if QuickNEasyORM is causing problems in your app? **Good job!** You’ve got users. You’ve succeeded. Now go upgrade to something more powerful, like Drizzle. QuickNEasyORM got you from point A to point B fast—and that’s the point.
 
 If you don’t like the way this package works, maybe you need to reconsider your life choices.
 

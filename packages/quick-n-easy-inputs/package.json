@@ -1,6 +1,6 @@
 {
     "name": "quick-n-easy-inputs",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "description": "UI input components for quick-n-easy applications",
     "author": "Cole Smith",
     "license": "MIT",
@@ -8,12 +8,25 @@
     "main": "./dist/index.js",
     "module": "./dist/index.js",
     "types": "./dist/index.d.ts",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/daysgobye/quick-n-easy/tree/main/packages/quick-n-easy-inputs"
+    },
+    "homepage": "https://github.com/daysgobye/quick-n-easy/blob/main/packages/quick-n-easy-inputs/README.md",
+    "exports": {
+        "./quickNEasyInputs": {
+            "import": "./dist/quickNEasyInputs.js",
+            "require": "./dist/quickNEasyInputs.js",
+            "types": "./dist/quickNEasyInputs.d.ts"
+        }
+    },
     "files": [
         "dist"
     ],
     "scripts": {
         "clean": "rm -rf dist",
         "build": "bun run clean && tsc",
+        "dev": "bun run example.ts",
         "test": "bun test"
     },
     "peerDependencies": {

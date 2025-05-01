@@ -1,7 +1,7 @@
 import { Database } from "bun:sqlite";
 import type { GenericDB } from "../quickNEasyOrm";
 
-export function createBunSqliteDB(...args: any[]): GenericDB {
+export function createDB(...args: any[]): GenericDB {
     const db = new Database(...args);
     return {
         query: (sql: string, ...params: any[]) => {

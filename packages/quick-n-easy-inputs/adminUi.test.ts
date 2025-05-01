@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test";
-import { AdminUI } from "./adminUi";
+import { QuickNEasyInputs } from "./quickNEasyInputs";
 
-import { SimpleORM, type DatabaseDeclaration } from "quick-n-easy-orm/quickNEasyOrm";
+import { QuickNEasyORM, type DatabaseDeclaration } from "quick-n-easy-orm/quickNEasyOrm";
 import { createBunSqliteDB } from "quick-n-easy-orm/shims/bunSqliteShim";
 
 const dbDeclaration: DatabaseDeclaration = {
@@ -18,8 +18,8 @@ const dbDeclaration: DatabaseDeclaration = {
     }
 };
 
-const orm = new SimpleORM(createBunSqliteDB(":memory:"), dbDeclaration);
-const adminUI = new AdminUI(dbDeclaration, orm);
+const orm = new QuickNEasyORM(createBunSqliteDB(":memory:"), dbDeclaration);
+const adminUI = new QuickNEasyInputs(dbDeclaration, orm);
 
 describe("AdminUI", () => {
     test("should register custom renderers", async () => {

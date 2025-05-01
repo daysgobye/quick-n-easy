@@ -1,6 +1,6 @@
 {
   "name": "quick-n-easy-orm",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "description": "A simple ORM package.",
   "author": "Cole Smith",
   "license": "MIT",
@@ -10,12 +10,9 @@
   "types": "./dist/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/daysgobye/quick-n-easy/packages/quick-n-easy-orm"
+    "url": "https://github.com/daysgobye/quick-n-easy/tree/main/packages/quick-n-easy-orm"
   },
-  "bugs": {
-    "url": "https://github.com/username/repository-name/issues"
-  },
-  "homepage": "https://github.com/daysgobye/quick-n-easy/packages/quick-n-easy-orm#readme",
+  "homepage": "https://github.com/daysgobye/quick-n-easy/blob/main/packages/quick-n-easy-orm/README.md",
   "exports": {
     "./quickNEasyOrm": {
       "import": "./dist/quickNEasyOrm.js",
@@ -59,6 +56,9 @@
   "keywords": [
     "orm",
     "database",
-    "simple"
+    "simple",
+    "quick",
+    "easy",
+    "side project"
   ]
 }

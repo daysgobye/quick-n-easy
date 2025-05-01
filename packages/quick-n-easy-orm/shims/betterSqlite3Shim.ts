@@ -2,7 +2,7 @@ import type { GenericDB } from "../quickNEasyOrm";
 import Database from 'better-sqlite3';
 
 
-export function createBetterSqlite3DB(dbFilePath: string): GenericDB {
+export function createDB(dbFilePath: string): GenericDB {
     const db = new Database(dbFilePath);
 
     return {

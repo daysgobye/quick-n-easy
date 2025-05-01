@@ -1,9 +1,9 @@
-import type { ColumnType, SimpleORM, DatabaseDeclaration, DbRecord } from "quick-n-easy-orm/quickNEasyOrm";
+import type { ColumnType, QuickNEasyORM, DatabaseDeclaration, DbRecord } from "quick-n-easy-orm/quickNEasyOrm";
 
 export type RendererFunc = (
     columnName: string,
     columnType: ColumnType,
-    orm: SimpleORM
+    orm: QuickNEasyORM
 ) => Promise<string>;
 
 
@@ -11,13 +11,13 @@ export type RendererFunc = (
  * A renderer function that returns an HTML input string for a given column.
  */
 
-export class AdminUI {
+export class QuickNEasyInputs {
     private declaration: DatabaseDeclaration;
-    private orm: SimpleORM;
+    private orm: QuickNEasyORM;
     private renderers: Record<string, RendererFunc>;
 
-    constructor(declaration: DatabaseDeclaration, orm: SimpleORM) {
-        this.declaration = declaration;
+    constructor(orm: QuickNEasyORM) {
+        this.declaration = orm.declaration;
         this.orm = orm;
         this.renderers = {};
         this.registerDefaultRenderers();

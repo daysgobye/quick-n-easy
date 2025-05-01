@@ -227,7 +227,7 @@ function prepareRecordForStorage(tableDecl: TableDeclaration, record: any): any 
 
 export class QuickNEasyORM {
     private db: GenericDB;
-    private declaration: DatabaseDeclaration;
+    declaration: DatabaseDeclaration;
 
     constructor(db: GenericDB, declaration: DatabaseDeclaration) {
         this.db = db;

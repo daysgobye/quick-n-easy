@@ -1,6 +1,6 @@
 import { describe, expect, test, beforeEach, afterEach } from "bun:test";
 import { QuickNEasyORM, type DatabaseDeclaration, type GenericDB } from "./quickNEasyOrm";
-import { createBunSqliteDB } from "./shims/bunSqliteShim";
+import { createDB } from "./shims/bunSqliteShim";
 
 describe("SimpleORM", () => {
     let db: GenericDB;
@@ -26,7 +26,7 @@ describe("SimpleORM", () => {
     // Setup before each test
     beforeEach(() => {
         // Create in-memory SQLite database
-        db = createBunSqliteDB(":memory:")
+        db = createDB(":memory:")
 
         orm = new QuickNEasyORM(db, dbDeclaration);
     });

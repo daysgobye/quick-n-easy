@@ -1,6 +1,6 @@
 import type { GenericDB } from "../quickNEasyOrm";
 
-export function createD1DB(d1db: any): GenericDB {
+export function createDB(d1db: any): GenericDB {
     return {
         query: (sql: string, ...params: any[]) => {
             return {
