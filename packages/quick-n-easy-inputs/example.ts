@@ -31,6 +31,7 @@ const orm = new QuickNEasyORM(db, dbDeclaration);
 async function runAdminUIExample() {
     console.log("\n--- Creating AdminUI instance ---");
     const adminUI = new QuickNEasyInputs(orm);
+    const user = await orm.insert("user", { email: "test@example.com", password: "password123" });
 
     // Register a custom renderer for image fields
     adminUI.registerRenderers({
@@ -53,6 +54,12 @@ async function runAdminUIExample() {
     const postForm = await adminUI.generateForm("post", "/api/posts");
     console.log("Post form HTML generated:");
     console.log(postForm);
+
+    console.log("\n--- Generating Form with values ---");
+    const userValue = await orm.get(user.id);
+    const userEditForm = await adminUI.generateForm("user", `/api/users/${user.id}`, userValue);
+    console.log("User form HTML generated:");
+    console.log(userEditForm);
 
     // Save the forms to HTML files for viewing
 
