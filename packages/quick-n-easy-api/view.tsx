@@ -1,22 +1,31 @@
 import { html } from 'hono/html'
 import type { QuickNEasyAPI } from '.'
-import { TableDeclaration } from 'quick-n-easy-orm/quickNEasyOrm'
+import { ColumnType, TableDeclaration } from 'quick-n-easy-orm/quickNEasyOrm'
 import { QuickNEasyInputs } from 'quick-n-easy-inputs/quickNEasyInputs'
+import { basicAuth } from 'hono/basic-auth'
+
+{/* <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css"> */}
+
 export const Layout = (props: {
     title: string
     children?: any
-}
-) =>
-    html`<!doctype html>
+}) => html`<!doctype html>
       <html>
         <head>
+          <meta charset="utf-8" />
+          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<link rel="stylesheet" href="https://unpkg.com/mvp.css"> 
+
           <title>${props.title}</title>
         </head>
         <body>
-          ${props.children}
+        <main>
+        ${props.children}
+        </main >
         </body>
       </html>`
-export type ColumnType = "text" | "long text" | "image" | "date" | "json" | "number" | "bool" | { type: "one-to-one" | "one-to-many", ref: string };
 
 const genarateDataForTable = (tableSchemas: TableDeclaration) => {
     let tempData: Record<string, any> = {}
@@ -25,14 +34,14 @@ const genarateDataForTable = (tableSchemas: TableDeclaration) => {
         if (fieldType instanceof Object) {
             if (fieldType.type === "one-to-one") {
                 tempData[field] = {
-                    id: "user_123",
+                    id: `${fieldType.ref}_123`,
                     updatedAt: new Date(),
                     createdAt: new Date(),
 
                 }
             } else {
                 tempData[field] = [{
-                    id: "user_123",
+                    id: `${fieldType.ref}_123`,
                     updatedAt: new Date(),
                     createdAt: new Date(),
 
@@ -67,7 +76,68 @@ const genarateDataForTable = (tableSchemas: TableDeclaration) => {
     }
     return tempData;
 }
+const genarateApiExample = (table: string, data: Record<string, any>) => {
+    const exampleData = { ...data }
+    if (exampleData.updatedAt) delete (exampleData.updatedAt)
+    if (exampleData.createdAt) delete (exampleData.createdAt)
+    if (exampleData.id) delete (exampleData.id)
+    if (exampleData.metadata) delete (exampleData.metadata)
 
+    return (
+        <>
+            < details >
+                <summary>GET /api/{table} - List all records </summary>
+                < pre >
+                    <code>
+                        {` fetch('/api/${table}').then(response => response.json()).then(data => console.log(data));`}
+                    </code>
+                </pre >
+            </details>
+            < details >
+                <summary>POST /api/{table} - Create a new record </summary>
+                < pre > <code>
+                    {` fetch('/api/{table}', {method: 'POST',headers: {'Content-Type': 'application/json'},body: ${JSON.stringify(exampleData, null, 2)}}).then(response => response.json()).then(data => console.log(data));`}
+                </code></pre >
+
+            </details>
+
+        </>
+    )
+}
+const genarateApiExampleForId = (table: string, id: string, exampleData: Record<string, any>) => {
+    return (
+        <>
+
+            < details >
+                <summary>GET /api/{table}/{id} - Get a single record </summary>
+                <pre>
+                    <code>
+                        {`fetch('/api/${table}/${id}').then(response => response.json()).then(data => console.log(data)); `}
+                    </code>
+                </pre>
+
+            </details>
+            < details >
+                <summary>PUT /api/{table}/{id} - Update a record </summary>
+                <pre>
+                    <code>
+                        {` fetch('/api/${table}/${id}', {method: 'PUT',headers: {Content-Type': 'application/json'},body:${JSON.stringify(exampleData, null, 2)}}).then(response => response.json()).then(data => console.log(data)); `}
+                    </code>
+                </pre >
+            </details>
+
+            < details >
+                <summary>DELETE /api/{table}/{id} - Delete a record </summary>
+                <pre>
+                    <code>
+                        {`fetch('/api/${table}/${id}', { method: 'DELETE'}).then(response => response.json()).then(data => console.log(data)); `}
+                    </code>
+                </pre>
+            </details>
+
+        </>
+    )
+}
 export const makeDocsRoute = (api: QuickNEasyAPI) => {
     api.app.get('/api', (c) => {
         const tables = api.tableNames;
@@ -106,51 +176,8 @@ export const makeDocsRoute = (api: QuickNEasyAPI) => {
                         <>
 
                             <h3>Table: {table} </h3>
-                            < details >
-                                <summary>GET /api/{table} - List all records </summary>
-                                < pre >
-                                    <code>
-                                        {` fetch('/api/${table}').then(response => response.json()).then(data => console.log(data));
-                                        `}
-                                    </code>
-                                </pre >
-                            </details>
-                            < details >
-                                <summary>POST /api/{table} - Create a new record </summary>
-                                < pre > <code>
-                                    {` fetch('/api/{table}', {method: 'POST',headers: {'Content-Type': 'application/json'},body: ${JSON.stringify(genarateDataForTable(tableSchemas[table]), null, 2)}}).then(response => response.json()).then(data => console.log(data));`}
-                                </code></pre >
-
-                            </details>
-
-                            < details >
-                                <summary>GET /api/{table}/:id - Get a single record </summary>
-                                <pre>
-                                    <code>
-                                        {`fetch('/api/${table}/1').then(response => response.json()).then(data => console.log(data)); 
-                                    `}
-                                    </code>
-                                </pre>
-
-                            </details>
-                            < details >
-                                <summary>PUT /api/{table}/: id - Update a record </summary>
-                                <pre>
-                                    <code>
-                                        {` fetch('/api/${table}/1', {method: 'PUT',headers: {Content-Type': 'application/json'},body:${JSON.stringify(genarateDataForTable(tableSchemas[table]), null, 2)}}).then(response => response.json()).then(data => console.log(data)); `}
-                                    </code>
-                                </pre >
-                            </details>
-
-                            < details >
-                                <summary>DELETE / api / {table} /: id - Delete a record </summary>
-                                <pre>
-                                    <code>
-                                        {`fetch('/api/${table}/1', { method: 'DELETE'}).then(response => response.json()).then(data => console.log(data)); `}
-                                    </code>
-                                </pre>
-                            </details>
-
+                            {genarateApiExample(table, genarateDataForTable(tableSchemas[table]))}
+                            {genarateApiExampleForId(table, ":id", genarateDataForTable(tableSchemas[table]))}
 
 
                         </>
@@ -163,10 +190,26 @@ export const makeDocsRoute = (api: QuickNEasyAPI) => {
 }
 
 export const makeAdminRoute = (api: QuickNEasyAPI) => {
-    const inputs = new QuickNEasyInputs(api.orm)
-    inputs.styles = false
+    api.app.use(
+        '/admin/*',
+        basicAuth({
+            verifyUser: (username, password, c) => {
+                if (c.req.method !== "GET") return true
+                if (api.password === undefined) {
+                    return true
+                }
+                return (
+                    username === api.userName && password === api.password
+                )
+            },
+        })
+    )
     // Admin route for listing all tables
     api.app.get('/admin', (c) => {
+        const orm = api.getDb(c)
+        const inputs = new QuickNEasyInputs(orm)
+        inputs.styles = false
+
         const tables = api.tableNames;
 
         return c.html(
@@ -192,8 +235,10 @@ export const makeAdminRoute = (api: QuickNEasyAPI) => {
     for (const table of api.tableNames) {
         // List view for a specific table
         api.app.get(`/admin/${table}`, async (c) => {
+            const orm = api.getDb(c)
+
             try {
-                const records = await api.orm.list(table);
+                const records = await orm.list(table);
                 const tableSchema = api.declaration[table];
 
                 return c.html(
@@ -202,6 +247,7 @@ export const makeAdminRoute = (api: QuickNEasyAPI) => {
                             <h1>{table} - Records</h1>
                             <p><a href="/admin">Back to Admin Dashboard</a></p>
                             <p><a href={`/admin/${table}/new`}>Create New {table}</a></p>
+                            {genarateApiExample(table, records.length ? records[0] : genarateDataForTable(tableSchema))}
 
                             <table>
                                 <thead>
@@ -258,6 +304,9 @@ export const makeAdminRoute = (api: QuickNEasyAPI) => {
 
         // Create new record form
         api.app.get(`/admin/${table}/new`, async (c) => {
+            const orm = api.getDb(c)
+            const inputs = new QuickNEasyInputs(orm)
+            inputs.styles = false
             try {
                 const tableSchema = api.declaration[table];
                 const genaratedForm = await inputs.generateForm(table, `/admin/${table}/new`)
@@ -287,6 +336,8 @@ export const makeAdminRoute = (api: QuickNEasyAPI) => {
 
         // Handle new record submission
         api.app.post(`/admin/${table}/new`, async (c) => {
+            const orm = api.getDb(c)
+
             try {
                 const formData = await c.req.formData();
                 const data: Record<string, any> = {};
@@ -295,7 +346,7 @@ export const makeAdminRoute = (api: QuickNEasyAPI) => {
                     data[key] = value;
                 }
 
-                const record = await api.orm.insert(table, data);
+                const record = await orm.insert(table, data);
                 return c.redirect(`/admin/${table}`);
             } catch (e) {
                 return c.html(
@@ -312,15 +363,20 @@ export const makeAdminRoute = (api: QuickNEasyAPI) => {
 
         // Edit record form
         api.app.get(`/admin/${table}/:id`, async (c) => {
+            const orm = api.getDb(c)
+            const inputs = new QuickNEasyInputs(orm)
+            inputs.styles = false
             try {
                 const id = c.req.param("id");
-                const record = await api.orm.get(id);
+                const record = await orm.get(id);
                 const genaratedForm = await inputs.generateForm(table, `/admin/${table}/${id}`, record)
                 return c.html(
                     <Layout title={`Edit ${table} - ${id}`}>
                         <>
                             <h1>Edit {table} - {id}</h1>
                             <p><a href={`/admin/${table}`}>Back to {table} List</a></p>
+                            {genarateApiExampleForId(table, id, record)}
+
                             <div dangerouslySetInnerHTML={{ __html: genaratedForm }}>
                             </div>
 
@@ -345,6 +401,8 @@ export const makeAdminRoute = (api: QuickNEasyAPI) => {
 
         // Handle record update
         api.app.post(`/admin/${table}/:id`, async (c) => {
+            const orm = api.getDb(c)
+
             try {
                 const id = c.req.param("id");
                 const formData = await c.req.formData();
@@ -355,7 +413,7 @@ export const makeAdminRoute = (api: QuickNEasyAPI) => {
                 }
 
                 // Update the record
-                const record = await api.orm.update({ ...data, id });
+                const record = await orm.update({ ...data, id });
                 return c.redirect(`/admin/${table}`);
             } catch (e) {
                 return c.html(
@@ -372,9 +430,11 @@ export const makeAdminRoute = (api: QuickNEasyAPI) => {
 
         // Handle record deletion
         api.app.post(`/admin/${table}/delete/:id`, async (c) => {
+            const orm = api.getDb(c)
+
             try {
                 const id = c.req.param("id");
-                await api.orm.delete(id);
+                await orm.delete(id);
                 return c.redirect(`/admin/${table}`);
             } catch (e) {
                 return c.html(

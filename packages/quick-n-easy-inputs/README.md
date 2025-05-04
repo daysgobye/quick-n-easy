@@ -81,10 +81,6 @@ class QuickNEasyInputs {
 }
 ```
 
-## 🎉 Contributing
-
-Found a bug? Want to add a feature? ok.
-
 ## 📝 License
 
 MIT - because sharing is caring! ❤️

@@ -1,21 +1,27 @@
-import { Hono } from "hono";
+import { Context, Hono } from "hono";
 import type { DatabaseDeclaration, QuickNEasyORM } from "quick-n-easy-orm/quickNEasyOrm";
 import { makeDocsRoute, makeAdminRoute } from "./view";
 
-
-
 export class QuickNEasyAPI {
-
-    orm: QuickNEasyORM;
     app: Hono;
     declaration: DatabaseDeclaration
     tableNames: string[];
-    constructor(app: Hono, orm: QuickNEasyORM) {
-        this.orm = orm;
+    userName: string = "admin";
+    password: string | undefined;
+    getDb: (c: Context) => QuickNEasyORM
+    constructor(app: Hono, declaration: DatabaseDeclaration, getDb: (c: Context) => QuickNEasyORM, password?: string, userName?: string) {
         this.app = app;
-        this.declaration = orm.declaration;
-        this.tableNames = Object.keys(orm.declaration);
+        this.declaration = declaration;
+        this.tableNames = Object.keys(declaration);
+        this.getDb = getDb
         this.registerApiRoutes();
+        if (password) {
+            this.password = password;
+        }
+        if (userName) {
+            this.userName = userName;
+        }
+
     }
 
     registerApiRoutes() {
@@ -24,8 +30,10 @@ export class QuickNEasyAPI {
         for (const tableName of this.tableNames) {
             // List all records
             this.app.get(`/api/${tableName}`, async (c) => {
+                const orm = this.getDb(c)
+
                 try {
-                    const records = await this.orm.list(tableName);
+                    const records = await orm.list(tableName);
                     return c.json(records);
                 } catch (e) {
                     //@ts-ignore
@@ -34,6 +42,9 @@ export class QuickNEasyAPI {
             });
             // Create a record
             this.app.post(`/api/${tableName}`, async (c) => {
+                const orm = this.getDb(c)
+
+
                 try {
                     let data: Record<string, any>;
                     const contentType = c.req.header('content-type') || '';
@@ -51,7 +62,7 @@ export class QuickNEasyAPI {
                         data = await c.req.json();
                     }
 
-                    const record = await this.orm.insert(tableName, data);
+                    const record = await orm.insert(tableName, data);
                     return c.json(record, 201);
                 } catch (e) {
                     //@ts-ignore
@@ -60,9 +71,12 @@ export class QuickNEasyAPI {
             });
             // Get a single record
             this.app.get(`/api/${tableName}/:id`, async (c) => {
+                const orm = this.getDb(c)
+
+
                 try {
                     const id = c.req.param("id");
-                    const record = await this.orm.get(id);
+                    const record = await orm.get(id);
                     return c.json(record);
                 } catch (e) {
                     //@ts-ignore
@@ -71,9 +85,12 @@ export class QuickNEasyAPI {
             });
             // Delete a record
             this.app.delete(`/api/${tableName}/:id`, async (c) => {
+                const orm = this.getDb(c)
+
+
                 try {
                     const id = c.req.param("id");
-                    await this.orm.delete(id);
+                    await orm.delete(id);
                     return c.json({ success: true });
                 } catch (e) {
                     //@ts-ignore
@@ -82,6 +99,9 @@ export class QuickNEasyAPI {
             });
             // Update a record
             this.app.put(`/api/${tableName}/:id`, async (c) => {
+                const orm = this.getDb(c)
+
+
                 try {
                     const id = c.req.param("id");
                     let data: Record<string, any>;
@@ -100,7 +120,7 @@ export class QuickNEasyAPI {
                         data = await c.req.json();
                     }
 
-                    const record = await this.orm.update({ ...data, id });
+                    const record = await orm.update({ ...data, id });
                     return c.json(record);
                 } catch (e) {
                     //@ts-ignore

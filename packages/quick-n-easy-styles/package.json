@@ -1,0 +1,20 @@
+{
+    "name": "quick-n-easy-styles",
+    "version": "0.1.0",
+    "description": "A classless CSS library with variable-driven theming for the Quick-n-Easy ecosystem",
+    "main": "index.js",
+    "files": [
+        "quickNEasyStyles.css",
+        "baseStyles.css",
+        "README.md"
+    ],
+    "keywords": [
+        "css",
+        "classless",
+        "variables",
+        "theming",
+        "quick-n-easy"
+    ],
+    "author": "",
+    "license": "MIT"
+}

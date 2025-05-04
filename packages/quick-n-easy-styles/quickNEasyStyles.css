@@ -1,0 +1,104 @@
+:root {
+    /* Primary color - the only color users need to define */
+    --qne-primary-color: #000000;
+
+    /* Color palette generated using relative color syntax */
+    --qne-primary-light: color-mix(in srgb, var(--qne-primary-color) 70%, white);
+    --qne-primary-lighter: color-mix(in srgb, var(--qne-primary-color) 30%, white);
+    --qne-primary-dark: color-mix(in srgb, var(--qne-primary-color) 70%, black);
+    --qne-primary-darker: color-mix(in srgb, var(--qne-primary-color) 30%, black);
+
+    /* Neutral colors */
+    --qne-neutral-50: #f8f9fa;
+    --qne-neutral-100: #f1f3f5;
+    --qne-neutral-200: #e9ecef;
+    --qne-neutral-300: #dee2e6;
+    --qne-neutral-400: #ced4da;
+    --qne-neutral-500: #adb5bd;
+    --qne-neutral-600: #6c757d;
+    --qne-neutral-700: #495057;
+    --qne-neutral-800: #343a40;
+    --qne-neutral-900: #212529;
+
+    /* Semantic colors derived from primary */
+    --qne-success: color-mix(in srgb, #2ecc71, var(--qne-primary-color) 20%);
+    --qne-warning: color-mix(in srgb, #f39c12, var(--qne-primary-color) 20%);
+    --qne-danger: color-mix(in srgb, #e74c3c, var(--qne-primary-color) 20%);
+    --qne-info: color-mix(in srgb, #00bcd4, var(--qne-primary-color) 20%);
+
+    /* Text colors */
+    --qne-text-primary: var(--qne-neutral-900);
+    --qne-text-secondary: var(--qne-neutral-700);
+    --qne-text-tertiary: var(--qne-neutral-600);
+    --qne-text-on-primary: white;
+    --qne-text-on-dark: white;
+
+    /* Background colors */
+    --qne-bg-body: white;
+    --qne-bg-surface: var(--qne-neutral-50);
+    --qne-bg-elevated: white;
+
+    /* Border colors */
+    --qne-border-color: var(--qne-neutral-300);
+    --qne-border-color-focus: var(--qne-primary-color);
+
+    /* Spacing variables */
+    --qne-space-xs: 0.25rem;
+    --qne-space-sm: 0.5rem;
+    --qne-space-md: 1rem;
+    --qne-space-lg: 1.5rem;
+    --qne-space-xl: 2rem;
+    --qne-space-xxl: 3rem;
+
+    /* Layout variables */
+    --qne-container-width: 1200px;
+    --qne-container-padding: var(--qne-space-md);
+
+    /* Grid variables */
+    --qne-grid-gap-x: var(--qne-space-md);
+    --qne-grid-gap-y: var(--qne-space-md);
+
+    /* Border radius */
+    --qne-border-radius-sm: 0.25rem;
+    --qne-border-radius-md: 0.5rem;
+    --qne-border-radius-lg: 0.75rem;
+    --qne-border-radius-pill: 9999px;
+
+    /* Shadow variables */
+    --qne-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+    --qne-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --qne-shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+
+    /* Typography */
+    --qne-font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    --qne-font-size-xs: 0.75rem;
+    --qne-font-size-sm: 0.875rem;
+    --qne-font-size-md: 1rem;
+    --qne-font-size-lg: 1.125rem;
+    --qne-font-size-xl: 1.25rem;
+    --qne-font-size-xxl: 1.5rem;
+    --qne-font-size-xxxl: 2rem;
+
+    /* Line heights */
+    --qne-line-height-tight: 1.2;
+    --qne-line-height-normal: 1.5;
+    --qne-line-height-loose: 1.8;
+
+    /* Form element variables */
+    --qne-input-height: 2.5rem;
+    --qne-input-padding: 0 var(--qne-space-sm);
+
+    /* Transition variables */
+    --qne-transition-fast: 150ms ease;
+    --qne-transition-normal: 250ms ease;
+    --qne-transition-slow: 350ms ease;
+
+    /* Z-index variables */
+    --qne-z-index-dropdown: 1000;
+    --qne-z-index-sticky: 1020;
+    --qne-z-index-fixed: 1030;
+    --qne-z-index-modal-backdrop: 1040;
+    --qne-z-index-modal: 1050;
+    --qne-z-index-popover: 1060;
+    --qne-z-index-tooltip: 1070;
+}

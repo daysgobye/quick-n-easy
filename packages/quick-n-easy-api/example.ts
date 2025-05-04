@@ -5,7 +5,6 @@ import { QuickNEasyAPI } from ".";
 
 const app = new Hono()
 // const db = new Database(":memory:");
-const db = createDB(":memory:")
 // const db = new Database("example.db");
 
 
@@ -24,11 +23,15 @@ const dbDeclaration: DatabaseDeclaration = {
         posts: { type: "one-to-many", ref: "post" },
     }
 };
-
-// --- INIT ORM ---
+const db = createDB(":memory:")
 const orm = new QuickNEasyORM(db, dbDeclaration);
-const api = new QuickNEasyAPI(app, orm);
 const user = await orm.insert("user", { email: "test@example.com", password: "password123" });
+
+const api = new QuickNEasyAPI(app, dbDeclaration, (c) => {
+    return orm
+},
+
+);
 
 app.get('/', (c) => c.text('Hono!'))
 

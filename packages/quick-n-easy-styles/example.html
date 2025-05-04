@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick-n-Easy Styles Example</title>
+    <link rel="stylesheet" href="./baseStyles.css">
+    <style>
+        /* Example of customizing the theme by overriding CSS variables */
+        :root {
+            /* Change the primary color to customize the entire theme */
+            --qne-primary-color: #9c27b0;
+            /* Purple instead of blue */
+
+            /* Optionally override other variables */
+            --qne-container-width: 800px;
+            --qne-space-md: 1.25rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Quick-n-Easy Styles Demo</h1>
+        <p>This is a demonstration of the classless CSS library with variable-driven theming.</p>
+
+        <h2>Typography</h2>
+        <h1>Heading 1</h1>
+        <h2>Heading 2</h2>
+        <h3>Heading 3</h3>
+        <h4>Heading 4</h4>
+        <h5>Heading 5</h5>
+        <h6>Heading 6</h6>
+        <p>This is a paragraph with <a href="#">a link</a> and <strong>bold text</strong>.</p>
+
+        <h2>Forms</h2>
+        <form>
+            <div>
+                <label for="name">Name</label>
+                <input type="text" id="name" placeholder="Enter your name">
+            </div>
+            <div>
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="Enter your email">
+            </div>
+            <div>
+                <label for="message">Message</label>
+                <textarea id="message" placeholder="Enter your message"></textarea>
+            </div>
+            <div>
+                <label>
+                    <input type="checkbox"> Subscribe to newsletter
+                </label>
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+
+        <h2>Tables</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>John Doe</td>
+                    <td>john@example.com</td>
+                    <td>Admin</td>
+                </tr>
+                <tr>
+                    <td>Jane Smith</td>
+                    <td>jane@example.com</td>
+                    <td>User</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>Alerts</h2>
+        <div class="alert alert-success">This is a success alert</div>
+        <div class="alert alert-warning">This is a warning alert</div>
+        <div class="alert alert-danger">This is a danger alert</div>
+        <div class="alert alert-info">This is an info alert</div>
+    </div>
+</body>
+
+</html>
