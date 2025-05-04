@@ -61,6 +61,45 @@ const api = new QuickNEasyAPI(
     (c) => orm,
     "securePassword" // Optional: Add password protection
 );
+// Add your custom routes if needed
+app.get('/', (c) => c.text('Welcome to my API!'));
+
+export default app;
+```
+### Or with cloudflare D1
+```typescript
+import { DatabaseDeclaration, QuickNEasyORM } from "quick-n-easy-orm/quickNEasyOrm";
+import { Hono } from 'hono';
+import { QuickNEasyAPI } from "quick-n-easy-api";
+
+import { createDB } from "quick-n-easy-orm/shims/d1Shim";
+
+const app = new Hono<{ Bindings: Bindings }>()
+const dbDeclaration: DatabaseDeclaration = {
+    post: {
+        title: "text",
+        body: "long text",
+        author: { type: "one-to-one", ref: "user" },
+        image: "image",
+    },
+    user: {
+        email: "text",
+        password: "text",
+        posts: { type: "one-to-many", ref: "post" },
+    }
+};
+
+const api = new QuickNEasyAPI(
+    app, 
+    dbDeclaration, 
+    (c) => {
+        const db = createDB(c.env.DB)
+        const orm = new QuickNEasyORM(db, dbDeclaration);
+        return orm
+    },
+    "securePassword" // Optional: Add password protection
+);
+
 
 // Add your custom routes if needed
 app.get('/', (c) => c.text('Welcome to my API!'));
@@ -106,10 +145,17 @@ For each model in your database declaration, the following RESTful endpoints are
 ## 📊 Admin UI
 
 Access your admin interface at `/admin` to manage your data with a user-friendly interface. No additional configuration required!
+![Admin UI](
+    https://github.com/daysgobye/quick-n-easy/blob/main/packages/quick-n-easy-api/pics/list.png?raw=true
+)
+![Admin UI](
+    https://github.com/daysgobye/quick-n-easy/blob/main/packages/quick-n-easy-api/pics/new.png?raw=true
+)
 
 ## 📚 API Documentation
 
 Auto-generated API documentation is available at `/api` to help you understand and use your API endpoints.
+![API Documentation](https://github.com/daysgobye/quick-n-easy/blob/main/packages/quick-n-easy-api/pics/api_docs.jpeg?raw=true)
 
 ## 🔄 Integration with Quick-n-Easy Ecosystem
 

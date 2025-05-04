@@ -157,6 +157,51 @@ If your project grows to the point where you need more advanced features, that's
 Stop wasting time configuring complex database setups and start building the features that matter. Quick N Easy ORM gives you everything you need to get your database up and running quickly so you can focus on solving real problems.
 
 
+## 🌐 The Quick-n-Easy Ecosystem
+
+Quick N Easy ORM is part of a growing ecosystem of tools designed to make development faster and easier:
+
+### 🔄 Quick-n-Easy API
+
+Pair Quick N Easy ORM with [Quick-n-Easy API](https://github.com/daysgobye/quick-n-easy/tree/main/packages/quick-n-easy-api) to create a complete backend solution:
+
+- **Automatic CRUD Endpoints**: Generate RESTful API endpoints for all your ORM models
+- **Built-in Admin UI**: Manage your data through a beautiful admin interface without writing any code
+- **Seamless Integration**: Works directly with your ORM models and database schema
+- **Authentication Ready**: Simple authentication with minimal configuration
+
+```typescript
+// After setting up your ORM
+import { QuickNEasyAPI } from "quick-n-easy-api";
+import { Hono } from 'hono';
+
+// Create a Hono app
+const app = new Hono();
+
+// Initialize the API with your ORM
+const api = new QuickNEasyAPI(
+    app, 
+    dbDeclaration, 
+    (c) => orm,
+    "securePassword" // Optional: Add password protection
+);
+
+export default app;
+```
+
+### 🎨 Quick-n-Easy Inputs
+
+Create beautiful form inputs that work seamlessly with your ORM models:
+
+- **Form Generation**: Automatically generate forms based on your database schema
+- **Validation**: Built-in validation that matches your database constraints
+- **Custom inputs**: Swap out default inputs with your own custom ones so you can make forms in react, svelte, etc.
+
+### 🔮 Future Expansion
+
+The Quick-n-Easy ecosystem is designed to work together seamlessly, providing a complete solution for rapid application development. Mix and match the packages you need for your specific project requirements.
+
+
 ## 📝 License
 
 MIT - because sharing is caring! ❤️
