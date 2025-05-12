@@ -11,11 +11,14 @@ export type RawDbRecord = {
     [key: string]: string | RawDbRecord[] | RawDbRecord | number | boolean;
 };
 
-export type DbRecord = {
+export type DbRecordDefaults = {
     id: string;
     metadata: Record<string, any>;
     createdAt: Date;
     updatedAt: Date;
+}
+export type DbRecord = DbRecordDefaults & {
+
     [key: string]: string | DbRecord[] | DbRecord | number | boolean | Date | Record<string, any>;
 };
 
@@ -234,7 +237,6 @@ export class QuickNEasyORM {
         this.declaration = declaration;
         this.initializeTables();
         this.checkAndRunMigrations();
-
     }
 
     private async checkAndRunMigrations() {
@@ -493,7 +495,7 @@ export class QuickNEasyORM {
         return result;
     }
 
-    async get(id: string, fetchRelations: boolean = true): Promise<DbRecord> {
+    async get<T extends Record<string, any>>(id: string, fetchRelations: boolean = true): Promise<(T & DbRecordDefaults)> {
         const [tableName] = id.split("_");
         const tableDecl = this.declaration[tableName];
 
@@ -504,27 +506,26 @@ export class QuickNEasyORM {
         const parsed = parseRawRecord(complete, tableDecl);
 
         // Fetch relations up to 2 levels deep if requested
-        return fetchRelations ? this.fetchRelations(parsed) : parsed;
+        return (fetchRelations ? await this.fetchRelations(parsed) : parsed) as T & DbRecordDefaults
     }
 
-    async list(tableName: string, fetchRelations: boolean = true): Promise<DbRecord[]> {
+    async list<T extends Record<string, any>>(tableName: string, fetchRelations: boolean = true): Promise<Array<(T & DbRecordDefaults)>> {
         const results: RawDbRecord[] = await this.db.query(`SELECT * FROM ${tableName}`).all();
         const tableDecl = this.declaration[tableName];
-        const parsedResults = results.map(row => {
-            const complete = fillMissingFields(tableDecl, row);
 
+        const parsed = results.map(result => {
+            const complete = fillMissingFields(tableDecl, result);
             return parseRawRecord(complete, tableDecl);
         });
 
-        // Fetch relations for each record if requested
-        if (fetchRelations) {
-            const withRelations = await Promise.all(
-                parsedResults.map(record => this.fetchRelations(record))
-            );
-            return withRelations;
-        }
+        if (!fetchRelations) return parsed as Array<T & DbRecord>;
 
-        return parsedResults;
+        // Fetch relations for each record
+        const withRelations = await Promise.all(
+            parsed.map(record => this.fetchRelations(record))
+        );
+
+        return withRelations as Array<T & DbRecord>;
     }
 
     async delete(id: string): Promise<void> {
@@ -532,7 +533,7 @@ export class QuickNEasyORM {
         this.db.query(`DELETE FROM ${tableName} WHERE id = ?`).run(id);
     }
 
-    async insert(tableName: string, data: any): Promise<DbRecord> {
+    async insert<T extends Record<string, any>>(tableName: string, data: any): Promise<(T & DbRecordDefaults)> {
         const tableDecl = this.declaration[tableName];
         if (!tableDecl) throw new Error(`Unknown table: ${tableName}`);
 
@@ -563,7 +564,8 @@ export class QuickNEasyORM {
         await this.updateReferenceOwner(tableName, id, data);
 
         const record = parseRawRecord(fullData, tableDecl);
-        return this.fetchRelations(record);
+        //@ts-ignore
+        return this.fetchRelations(record) as T & DbRecordDefaults
     }
 
     async update(record: any): Promise<DbRecord> {

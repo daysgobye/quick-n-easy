@@ -205,3 +205,186 @@ The Quick-n-Easy ecosystem is designed to work together seamlessly, providing a 
 ## 📝 License
 
 MIT - because sharing is caring! ❤️
+
+## 🤖 For LLMs: Quick N Easy ORM Reference Guide
+
+This section provides structured information about Quick N Easy ORM to help language models generate accurate code and assist users effectively.
+
+### Core Concepts
+
+1. **Database Declaration**: Define your schema as a JavaScript object with tables and columns
+2. **Column Types**: Simple types (`text`, `number`, etc.) and relations (`one-to-one`, `one-to-many`)
+3. **ORM Instance**: Created with a database connection and schema declaration
+4. **CRUD Operations**: Simple methods for data manipulation
+
+### API Reference
+
+#### Initialization
+
+```typescript
+import { type DatabaseDeclaration, QuickNEasyORM } from "quick-n-easy-orm";
+
+// Choose the appropriate database driver
+// For Bun:
+import { createDB } from "quick-n-easy-orm/shims/bunSqliteShim";
+// For Node.js:
+// import { createDB } from "quick-n-easy-orm/shims/betterSqlite3Shim";
+// For Cloudflare D1:
+// import { createDB } from "quick-n-easy-orm/shims/d1Shim";
+
+// Create database connection
+const db = createDB("path/to/database.sqlite"); // Use ":memory:" for in-memory database
+
+// Define schema
+const dbDeclaration: DatabaseDeclaration = {
+  // Each key is a table name
+  tableName: {
+    // Each key-value pair defines a column
+    columnName: "columnType",
+    // For relations
+    relationColumn: { type: "one-to-one"|"one-to-many", ref: "referencedTable" }
+  }
+};
+
+// Initialize ORM
+const orm = new QuickNEasyORM(db, dbDeclaration);
+```
+
+#### Data Types
+
+```typescript
+type ColumnType = 
+  | "text"        // Short text
+  | "long text"   // Longer text content
+  | "image"       // Image URL or path
+  | "date"        // Date value
+  | "json"        // JSON data
+  | "number"      // Numeric value
+  | "bool"        // Boolean value
+  | { type: "one-to-one" | "one-to-many", ref: string }; // Relations
+```
+
+#### CRUD Operations
+
+```typescript
+// Create (Insert)
+await orm.insert("tableName", { columnName: value, relationColumn: relatedEntityId });
+
+// Read (Get one by ID)
+await orm.get( id);
+
+// Read (List all)
+await orm.list("tableName");
+
+// Update
+const entity = await orm.get( id);
+entity.columnName = newValue;
+await orm.update(entity);
+
+// Delete
+await orm.delete(id);
+// OR
+await orm.delete(entity);
+```
+
+#### Working with Relations
+
+```typescript
+// One-to-one relation
+const post = await orm.insert("post", {
+  title: "My Post",
+  author: userId  // Just pass the ID of the related entity
+});
+
+// When fetching, relations are automatically loaded one level deep
+const fetchedPost = await orm.get( post.id);
+// fetchedPost.author will contain the full user object
+
+// One-to-many relations
+const user = await orm.get(userId);
+// user.posts will contain an array of post objects
+```
+
+#### Common Patterns and Best Practices
+
+1. **Database Setup**: Place database setup in a separate file (e.g., `db.ts`) and export the ORM instance
+2. **Type Safety**: Use TypeScript interfaces to define entity types that match your schema
+3. **Filtering**: Use JavaScript array methods on the results of `list()` operations
+4. **Error Handling**: Wrap ORM operations in try/catch blocks for proper error handling
+5. **Transactions**: Currently not supported natively; handle with care
+
+#### Example Implementation
+
+```typescript
+// db.ts
+import { type DatabaseDeclaration, QuickNEasyORM } from "quick-n-easy-orm";
+import { createDB } from "quick-n-easy-orm/shims/bunSqliteShim";
+
+const db = createDB("./data.sqlite");
+
+export const dbDeclaration: DatabaseDeclaration = {
+  user: {
+    name: "text",
+    email: "text",
+    isActive: "bool",
+    posts: { type: "one-to-many", ref: "post" }
+  },
+  post: {
+    title: "text",
+    content: "long text",
+    publishedAt: "date",
+    author: { type: "one-to-one", ref: "user" }
+  }
+};
+
+export const orm = new QuickNEasyORM(db, dbDeclaration);
+
+// Optional: Define TypeScript interfaces
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+  isActive: boolean;
+  posts?: Post[];
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface Post {
+  id: string;
+  title: string;
+  content: string;
+  publishedAt: string;
+  author?: User;
+  createdAt: string;
+  updatedAt: string;
+}
+```
+
+```typescript
+// usage.ts
+import { orm, type User, type Post } from "./db";
+
+async function createUser(): Promise<User> {
+  try {
+    return await orm.insert("user", {
+      name: "John Doe",
+      email: "john@example.com",
+      isActive: true
+    });
+  } catch (error) {
+    console.error("Failed to create user:", error);
+    throw error;
+  }
+}
+
+async function getUserPosts(userId: string): Promise<Post[]> {
+  const user = await orm.get("user", userId);
+  return user.posts || [];
+}
+
+async function getActiveUsers(): Promise<User[]> {
+  const users = await orm.list("user");
+  return users.filter(user => user.isActive);
+}
+```

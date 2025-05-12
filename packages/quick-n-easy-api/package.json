@@ -8,6 +8,18 @@
     "main": "./dist/index.js",
     "module": "./dist/index.js",
     "types": "./dist/index.d.ts",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/daysgobye/quick-n-easy/tree/main/packages/quick-n-easy-api"
+    },
+    "homepage": "https://github.com/daysgobye/quick-n-easy/blob/main/packages/quick-n-easy-api/README.md",
+    "exports": {
+        ".": {
+            "import": "./dist/index.js",
+            "require": "./dist/index.js",
+            "types": "./dist/index.d.ts"
+        }
+    },
     "files": [
         "dist"
     ],

@@ -21,6 +21,19 @@ const dbDeclaration: DatabaseDeclaration = {
         posts: { type: "one-to-many", ref: "post" },
     }
 };
+type Post = {
+    id: number;
+    title: string;
+    body: string;
+    author: User;
+    image: string;
+}
+type User = {
+    id: number;
+    email: string;
+    password: string;
+    posts: Post[];
+}
 
 // --- INIT ORM ---
 const orm = new QuickNEasyORM(db, dbDeclaration);
@@ -36,7 +49,7 @@ async function runExample() {
     console.log(user2);
 
     console.log("\n--- Listing users ---");
-    const users = await orm.list("user");
+    const users = await orm.list<User[]>("user");
     console.log(users);
 
     console.log("\n--- Inserting a post linked to the first user ---");
@@ -53,7 +66,7 @@ async function runExample() {
     console.log(posts);
 
     console.log("\n--- Getting specific user by ID ---");
-    const fetchedUser = await orm.get(user.id);
+    const fetchedUser = await orm.get<User>(user.id);
     console.log(fetchedUser);
 
     console.log("\n--- Updating the user's email ---");

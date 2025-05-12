@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick 'n Easy Styles - Demo & Docs</title>
+    <link rel="stylesheet" href="quick-n-easy-styles.css">
+    <style>
+        /* Additional styles for the demo page itself, not part of the library */
+        .docs-section {
+            margin-top: var(--qne-gap-xl);
+            padding-top: var(--qne-gap-lg);
+            border-top: 2px dashed var(--qne-border-color);
+            /* Use library variable for consistency */
+        }
+
+        .theme-switcher-container {
+            background-color: var(--qne-surface-color);
+            padding: var(--qne-gap-md);
+            border-radius: var(--qne-border-radius);
+            box-shadow: var(--qne-shadow-definition);
+            margin-bottom: var(--qne-gap-lg);
+            display: flex;
+            flex-wrap: wrap;
+            /* Allow wrapping on small screens */
+            align-items: center;
+            gap: var(--qne-gap-md);
+        }
+
+        .theme-switcher-container label {
+            margin-bottom: 0;
+            /* Override default label margin */
+            font-weight: bold;
+            flex-shrink: 0;
+            /* Prevent label from shrinking */
+        }
+
+        #themeSwitcher {
+            /* Uses library styles for select, but can add specifics */
+            min-width: 200px;
+            flex-grow: 1;
+            /* Allow select to take available space */
+        }
+
+        .variable-docs code,
+        .ai-guide code {
+            background-color: color-mix(in srgb, var(--qne-text-color) 8%, var(--qne-bg-color));
+            padding: var(--qne-gap-xs) var(--qne-gap-sm);
+            border-radius: calc(var(--qne-border-radius) / 2);
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+            font-size: 0.9em;
+            border: 1px solid var(--qne-border-color);
+        }
+
+        .component-example {
+            border: 1px solid var(--qne-border-color);
+            padding: var(--qne-gap-md);
+            border-radius: var(--qne-border-radius);
+            margin-bottom: var(--qne-gap-md);
+            background-color: color-mix(in srgb, var(--qne-bg-color) 98%, var(--qne-text-color));
+            /* Slightly off-white for example container */
+        }
+
+
+        /* Helper for image placeholders */
+        .placeholder-img {
+            background-color: #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #555;
+            font-weight: bold;
+            border-radius: var(--qne-border-radius);
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <nav>
+            <a href="#intro" class="qne-nav-brand">QNE Styles</a>
+            <ul>
+                <li><a href="#intro" class="qne-nav-active">Intro</a></li>
+                <li><a href="#variables">Variables</a></li>
+                <li><a href="#semantic">Semantic</a></li>
+                <li><a href="#components">Components</a></li>
+                <li><a href="#ai-guide">AI Guide</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="intro" class="qne-container">
+            <h1>Welcome to Quick 'n Easy Styles!</h1>
+            <p>This is a demonstration of a super simple, variable-driven CSS library. The core idea is to allow for
+                significant visual changes to a website by modifying just a handful of CSS root variables. Explore the
+                "Style Preset" dropdown below to see how different aesthetics like Neo-Brutalism, Minimalism, Flat
+                Design, Material-inspired, or a clean Dark Mode can be achieved with minimal effort.</p>
+
+            <div class="theme-switcher-container">
+                <label for="themeSwitcher">Select a Style Preset:</label>
+                <select id="themeSwitcher" aria-label="Theme style preset selector">
+                    <option value="default">Default Light</option>
+                    <option value="dark_mode">Clean Dark Mode</option>
+                    <option value="neo_brutalism">Neo-Brutalism</option>
+                    <option value="minimalist_flat">Minimalist Flat</option>
+                    <option value="material_inspired">Material Inspired</option>
+                    <option value="rounded_playful">Rounded & Playful</option>
+                    <option value="corporate_blue">Corporate Blue</option>
+                </select>
+            </div>
+        </section>
+
+        <section id="variables" class="docs-section qne-container variable-docs">
+            <h2>Core CSS Variables</h2>
+            <p>The entire look and feel of this library is controlled by the following 10 primary CSS variables defined
+                in the <code>:root</code> selector of <code>quick-n-easy-styles.css</code>. You can override these in
+                your own stylesheet or directly in the file to customize your site.</p>
+            <ul>
+                <li><code>--qne-bg-color</code>: Sets the main background color of the page. (e.g.,
+                    <code>#ffffff</code>, <code>#121212</code>)
+                </li>
+                <li><code>--qne-text-color</code>: Defines the primary color for text content. (e.g.,
+                    <code>#333333</code>, <code>#e0e0e0</code>)
+                </li>
+                <li><code>--qne-accent-color</code>: The main highlight color used for links, buttons, active states,
+                    etc. (e.g., <code>#007bff</code>, <code>#ff5722</code>)</li>
+                <li><code>--qne-accent-text-color</code>: Color for text placed on top of elements using
+                    <code>--qne-accent-color</code> (e.g., button text). (e.g., <code>#ffffff</code>,
+                    <code>#000000</code>)
+                </li>
+                <li><code>--qne-page-width</code>: Maximum width for the main content area. (e.g., <code>1100px</code>,
+                    <code>960px</code>)
+                </li>
+                <li><code>--qne-border-radius</code>: Controls the roundness of corners for elements like cards,
+                    buttons, and inputs. (e.g., <code>8px</code> for rounded, <code>0px</code> for sharp edges)</li>
+                <li><code>--qne-gap-size</code>: The base unit for spacing (paddings, margins, grid gaps). (e.g.,
+                    <code>1.5rem</code>, <code>2rem</code>)
+                </li>
+                <li><code>--qne-font-size-base</code>: The root font size for the document, affecting <code>rem</code>
+                    unit calculations. (e.g., <code>16px</code>, <code>15px</code>)</li>
+                <li><code>--qne-font-family-base</code>: The default font stack for the entire site. (e.g.,
+                    <code>system-ui, sans-serif</code>, <code>'Georgia', serif</code>)
+                </li>
+                <li><code>--qne-shadow-definition</code>: Defines the style of box shadows used across components. This
+                    is key for different aesthetics:
+                    <ul>
+                        <li>Flat/Minimalist: <code>none</code></li>
+                        <li>Neo-Brutalist: <code>3px 3px 0px var(--qne-text-color)</code> (or a fixed color like
+                            <code>#000</code>)
+                        </li>
+                        <li>Material/Soft: <code>0 4px 12px rgba(0,0,0,0.1)</code></li>
+                    </ul>
+                </li>
+            </ul>
+            <p>Numerous other variables (<code>--qne-accent-light</code>, <code>--qne-accent-dark</code>,
+                <code>--qne-border-color</code>, <code>--qne-surface-color</code>, heading sizes, specific gap sizes
+                like <code>--qne-gap-sm</code>, <code>--qne-gap-lg</code>, etc.) are automatically derived from these
+                core ten, ensuring a consistent design system.
+            </p>
+        </section>
+
+        <hr class="qne-container">
+
+        <section id="semantic" class="docs-section qne-container">
+            <h2>Semantic HTML Styling (Class-less)</h2>
+            <p>This library aims to make standard HTML elements look good "out of the box" without requiring additional
+                classes for basic styling. Below are examples of such elements.</p>
+
+            <h1>Heading 1</h1>
+            <h2>Heading 2</h2>
+            <h3>Heading 3</h3>
+            <h4>Heading 4</h4>
+            <h5>Heading 5</h5>
+            <h6>Heading 6</h6>
+
+            <p>This is a standard paragraph of text. It can include <strong>bold text</strong>, <em>italicized
+                    text</em>, and of course, <a href="#">a hyperlink</a>. Lorem ipsum dolor sit amet, consectetur
+                adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+                veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+
+            <ul>
+                <li>Unordered List Item 1</li>
+                <li>Unordered List Item 2
+                    <ul>
+                        <li>Nested Unordered Item A</li>
+                        <li>Nested Unordered Item B</li>
+                    </ul>
+                </li>
+                <li>Unordered List Item 3</li>
+            </ul>
+            <ol>
+                <li>Ordered List Item 1</li>
+                <li>Ordered List Item 2
+                    <ol>
+                        <li>Nested Ordered Item A</li>
+                        <li>Nested Ordered Item B</li>
+                    </ol>
+                </li>
+                <li>Ordered List Item 3</li>
+            </ol>
+
+            <blockquote>
+                <p>"The only way to do great work is to love what you do. If you haven't found it yet, keep looking.
+                    Don't settle."</p>
+                <footer>- Steve Jobs</footer>
+            </blockquote>
+
+            <p>Buttons and form elements are also styled by default:</p>
+            <button type="button">Primary Button</button>
+            <button type="button" class="qne-button-secondary">Secondary Button</button>
+            <a href="#" class="qne-button">Link as Button</a>
+            <br><br>
+
+            <form action="#" method="post">
+                <fieldset>
+                    <legend>Sample Form</legend>
+                    <div class="qne-form-group">
+                        <label for="sampleText">Text Input:</label>
+                        <input type="text" id="sampleText" name="sampleText" placeholder="e.g., John Doe">
+                    </div>
+                    <div class="qne-form-group">
+                        <label for="sampleEmail">Email Input:</label>
+                        <input type="email" id="sampleEmail" name="sampleEmail"
+                            placeholder="e.g., john.doe@example.com">
+                    </div>
+                    <div class="qne-form-group">
+                        <label for="sampleSelect">Select Dropdown:</label>
+                        <select id="sampleSelect" name="sampleSelect">
+                            <option value="">--Please choose an option--</option>
+                            <option value="1">Option 1</option>
+                            <option value="2">Option 2</option>
+                            <option value="3">Option 3</option>
+                        </select>
+                    </div>
+                    <div class="qne-form-group">
+                        <label for="sampleTextarea">Textarea:</label>
+                        <textarea id="sampleTextarea" name="sampleTextarea" rows="4"
+                            placeholder="Enter your message here..."></textarea>
+                    </div>
+                    <div class="qne-form-group">
+                        <input type="checkbox" id="sampleCheckbox" name="sampleCheckbox" value="agree">
+                        <label for="sampleCheckbox" style="display: inline; font-weight: normal;">I agree to the terms
+                            and conditions.</label>
+                    </div>
+                    <button type="submit">Submit Form</button>
+                </fieldset>
+            </form>
+
+            <h4 class="qne-mt-lg">Styled Table</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Product Name</th>
+                        <th>Price</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>101</td>
+                        <td>Super Widget</td>
+                        <td>$19.99</td>
+                        <td>In Stock</td>
+                    </tr>
+                    <tr>
+                        <td>102</td>
+                        <td>Mega Gadget</td>
+                        <td>$29.99</td>
+                        <td><a href="#">Backordered</a></td>
+                    </tr>
+                    <tr>
+                        <td>103</td>
+                        <td>Basic Gizmo</td>
+                        <td>$9.99</td>
+                        <td>In Stock</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <hr class="qne-container">
+
+        <section id="components" class="docs-section qne-container">
+            <h2>Components</h2>
+            <p>For more complex UI structures, "Quick 'n Easy Styles" provides several pre-styled components. These
+                components use specific CSS classes (prefixed with <code>.qne-</code>) and may require the accompanying
+                <code>quick-n-easy-scripts.js</code> file for full interactivity.
+            </p>
+
+            <h3 class="qne-mt-lg">Hero Section</h3>
+            <p>A prominent section typically used at the top of a page for calls to action or key messages.</p>
+            <div class="component-example">
+                <div class="qne-hero">
+                    <h1>Engaging Hero Title That Grabs Attention!</h1>
+                    <p>This is a short, impactful paragraph to clearly describe your value proposition or welcome users
+                        to your site. Make it compelling!</p>
+                    <button type="button" class="qne-button">Get Started Today</button>
+                </div>
+            </div>
+            <div class="code-block-container">
+                <pre><code class="language-html">&lt;div class="qne-hero"&gt;
+  &lt;h1&gt;Engaging Hero Title That Grabs Attention!&lt;/h1&gt;
+  &lt;p&gt;This is a short, impactful paragraph...&lt;/p&gt;
+  &lt;button type="button" class="qne-button"&gt;Get Started Today&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+
+            <h3 class="qne-mt-lg">Card</h3>
+            <p>Cards are versatile containers for displaying grouped information, such as articles, products, or
+                profiles.</p>
+            <div class="component-example">
+                <div class="qne-card" style="max-width: 380px;">
+                    <img src="https://placehold.co/380x200/007BFF/FFFFFF?text=Featured+Image"
+                        alt="Placeholder image for card">
+                    <h4 class="qne-card-title">Informative Card Title</h4>
+                    <div class="qne-card-content">
+                        <p>This is the main content of the card. It can contain text, lists, or other elements to
+                            provide details about the subject.</p>
+                        <button type="button" class="qne-button qne-button-secondary" style="width:100%;">Learn
+                            More</button>
+                    </div>
+                </div>
+            </div>
+            <div class="code-block-container">
+                <pre><code class="language-html">&lt;div class="qne-card"&gt;
+  &lt;img src="path/to/your-image.jpg" alt="Descriptive alt text"&gt;
+  &lt;h4 class="qne-card-title"&gt;Informative Card Title&lt;/h4&gt;
+  &lt;div class="qne-card-content"&gt;
+    &lt;p&gt;Card content goes here.&lt;/p&gt;
+    &lt;button type="button" class="qne-button"&gt;Action Button&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+
+            <h3 class="qne-mt-lg">3-Column Info Grid / Pricing Tiers</h3>
+            <p>Uses a grid layout to arrange cards (or other content) into responsive columns. Ideal for feature lists
+                or pricing plans.</p>
+            <div class="component-example">
+                <div class="qne-grid-3col">
+                    <div class="qne-card">
+                        <h4 class="qne-card-title">Basic Plan</h4>
+                        <p>Perfect for individuals starting out. Includes core features and community support.</p>
+                        <h3 style="text-align:center; margin: var(--qne-gap-md) 0;">$10<small>/mo</small></h3>
+                        <button type="button" class="qne-button-secondary" style="width:100%; margin-top: auto;">Choose
+                            Basic</button>
+                    </div>
+                    <div class="qne-card" style="border-color: var(--qne-accent-color); border-width: 2px;">
+                        <h4 class="qne-card-title" style="color: var(--qne-accent-color);">Pro Plan</h4>
+                        <p>Most popular choice for professionals and small teams. Advanced features and priority
+                            support.</p>
+                        <h3 style="text-align:center; margin: var(--qne-gap-md) 0; color: var(--qne-accent-color);">
+                            $25<small>/mo</small></h3>
+                        <button type="button" class="qne-button" style="width:100%; margin-top: auto;">Choose
+                            Pro</button>
+                    </div>
+                    <div class="qne-card">
+                        <h4 class="qne-card-title">Enterprise Plan</h4>
+                        <p>Tailored solutions for large organizations. Custom features, dedicated support, and SLAs.</p>
+                        <h3 style="text-align:center; margin: var(--qne-gap-md) 0;">Contact Us</h3>
+                        <button type="button" class="qne-button-secondary" style="width:100%; margin-top: auto;">Get
+                            Quote</button>
+                    </div>
+                </div>
+            </div>
+            <div class="code-block-container">
+                <pre><code class="language-html">&lt;div class="qne-grid-3col"&gt;
+  &lt;div class="qne-card"&gt;
+    &lt;h4 class="qne-card-title"&gt;Tier 1&lt;/h4&gt;
+    &lt;p&gt;Content for tier 1.&lt;/p&gt;
+    &lt;button type="button" class="qne-button"&gt;Select&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;div class="qne-card"&gt; &lt;!-- Card 2 --&gt; &lt;/div&gt;
+  &lt;div class="qne-card"&gt; &lt;!-- Card 3 --&gt; &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+
+            <h3 class="qne-mt-lg">Accordion</h3>
+            <p>A vertically stacked set of interactive headings that each reveal a section of content. Requires
+                JavaScript.</p>
+            <div class="component-example">
+                <div class="qne-accordion" data-qne-accordion-group="true">
+                    <div class="qne-accordion-item qne-active"> <button type="button" class="qne-accordion-button"
+                            aria-expanded="true">Accordion Item #1</button>
+                        <div class="qne-accordion-content" aria-hidden="false">
+                            <div class="qne-accordion-content-inner">
+                                This is the content for the first accordion item. It can contain any HTML, like
+                                paragraphs, lists, or even other components. This item is open by default.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="qne-accordion-item">
+                        <button type="button" class="qne-accordion-button" aria-expanded="false">Accordion Item
+                            #2</button>
+                        <div class="qne-accordion-content" aria-hidden="true">
+                            <div class="qne-accordion-content-inner">
+                                Content for the second item. Bacon ipsum dolor amet pork loin leberkas, ball tip shankle
+                                pork chop. Chicken t-bone biltong, cupim meatloaf pastrami.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="qne-accordion-item">
+                        <button type="button" class="qne-accordion-button" aria-expanded="false">Accordion Item
+                            #3</button>
+                        <div class="qne-accordion-content" aria-hidden="true">
+                            <div class="qne-accordion-content-inner">
+                                And the third item's content. This demonstrates how multiple items can be used.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="code-block-container">
+                <pre><code class="language-html">&lt;!-- For single-open behavior, add data-qne-accordion-group="true" to .qne-accordion --&gt;
+&lt;div class="qne-accordion"&gt;
+  &lt;div class="qne-accordion-item qne-active"&gt; &lt;!-- .qne-active makes it open by default --&gt;
+    &lt;button type="button" class="qne-accordion-button" aria-expanded="true"&gt;Item 1&lt;/button&gt;
+    &lt;div class="qne-accordion-content" aria-hidden="false"&gt;
+      &lt;div class="qne-accordion-content-inner"&gt;Content for item 1.&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="qne-accordion-item"&gt;
+    &lt;button type="button" class="qne-accordion-button" aria-expanded="false"&gt;Item 2&lt;/button&gt;
+    &lt;div class="qne-accordion-content" aria-hidden="true"&gt;
+      &lt;div class="qne-accordion-content-inner"&gt;Content for item 2.&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+
+            <h3 class="qne-mt-lg">Modal</h3>
+            <p>A dialog box/popup window that is displayed on top of the current page. Requires JavaScript.</p>
+            <div class="component-example">
+                <button type="button" class="qne-button" data-qne-modal-target="myDemoModal">Open Demo Modal</button>
+
+                <div id="myDemoModal" class="qne-modal" aria-labelledby="myDemoModalTitle" aria-hidden="true">
+                    <div class="qne-modal-content">
+                        <button type="button" class="qne-modal-close" aria-label="Close modal">&times;</button>
+                        <div class="qne-modal-header">
+                            <h2 id="myDemoModalTitle" class="qne-h3-size">Important Information</h2>
+                        </div>
+                        <div class="qne-modal-body">
+                            <p>This is the main content area of the modal. You can put forms, detailed information,
+                                warnings, or any other HTML content here.</p>
+                            <p>Ensure that modal content is accessible and provides clear actions for the user.</p>
+                            <form action="#">
+                                <div class="qne-form-group">
+                                    <label for="modalInput">Sample Input:</label>
+                                    <input type="text" id="modalInput" placeholder="Enter something...">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="qne-modal-footer">
+                            <button type="button" class="qne-button qne-button-secondary"
+                                data-qne-modal-dismiss>Cancel</button>
+                            <button type="button" class="qne-button">Confirm Action</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="code-block-container">
+                <pre><code class="language-html">&lt;!-- Button to trigger the modal --&gt;
+&lt;button type="button" class="qne-button" data-qne-modal-target="uniqueModalId"&gt;Open Modal&lt;/button&gt;
+
+&lt;!-- Modal Structure --&gt;
+&lt;div id="uniqueModalId" class="qne-modal" aria-labelledby="modalTitleId" aria-hidden="true"&gt;
+  &lt;div class="qne-modal-content"&gt;
+    &lt;button type="button" class="qne-modal-close" aria-label="Close modal"&gt;&times;&lt;/button&gt;
+    &lt;div class="qne-modal-header"&gt;
+      &lt;h2 id="modalTitleId"&gt;Modal Title&lt;/h2&gt;
+    &lt;/div&gt;
+    &lt;div class="qne-modal-body"&gt;
+      &lt;p&gt;Modal content goes here...&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class="qne-modal-footer"&gt;
+      &lt;button type="button" class="qne-button qne-button-secondary" data-qne-modal-dismiss&gt;Close&lt;/button&gt;
+      &lt;button type="button" class="qne-button"&gt;Save Changes&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+
+            <h3 class="qne-mt-lg">Login Form (using Card)</h3>
+            <p>A common form structure for user authentication, often styled within a card for visual grouping.</p>
+            <div class="component-example">
+                <div class="qne-form-container qne-card">
+                    <h2 class="qne-h3-size">Member Login</h2>
+                    <form action="#" method="post">
+                        <div class="qne-form-group">
+                            <label for="loginEmail">Email Address</label>
+                            <input type="email" id="loginEmail" name="email" placeholder="you@example.com" required>
+                        </div>
+                        <div class="qne-form-group">
+                            <label for="loginPassword">Password</label>
+                            <input type="password" id="loginPassword" name="password" placeholder="••••••••" required>
+                        </div>
+                        <button type="submit" class="qne-button">Log In Securely</button>
+                        <div class="qne-form-footer">
+                            <p>Don't have an account? <a href="#">Sign Up Here</a></p>
+                            <p><a href="#">Forgot your password?</a></p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="code-block-container">
+                <pre><code class="language-html">&lt;div class="qne-form-container qne-card"&gt; &lt;!-- Using .qne-card for styling --&gt;
+ &lt;h2&gt;Login&lt;/h2&gt;
+ &lt;form action="#" method="post"&gt;
+   &lt;div class="qne-form-group"&gt;
+     &lt;label for="email"&gt;Email&lt;/label&gt;
+     &lt;input type="email" id="email" name="email" required&gt;
+   &lt;/div&gt;
+   &lt;div class="qne-form-group"&gt;
+     &lt;label for="password"&gt;Password&lt;/label&gt;
+     &lt;input type="password" id="password" name="password" required&gt;
+   &lt;/div&gt;
+   &lt;button type="submit" class="qne-button"&gt;Log In&lt;/button&gt;
+   &lt;div class="qne-form-footer"&gt;
+     &lt;p&gt;No account? &lt;a href="#"&gt;Sign up&lt;/a&gt;&lt;/p&gt;
+   &lt;/div&gt;
+ &lt;/form&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+
+            <h3 class="qne-mt-lg">Tabs</h3>
+            <p>Allows users to switch between different sections of content within the same space. Requires JavaScript.
+            </p>
+            <div class="component-example">
+                <div class="qne-tabs">
+                    <div class="qne-tab-list" role="tablist" aria-label="Feature Tabs">
+                        <button type="button" class="qne-tab-button qne-active" role="tab" aria-selected="true"
+                            aria-controls="tab1-content-panel" data-qne-tab-target="#tab1-content-panel"
+                            id="tab1-button">Productivity</button>
+                        <button type="button" class="qne-tab-button" role="tab" aria-selected="false"
+                            aria-controls="tab2-content-panel" data-qne-tab-target="#tab2-content-panel"
+                            id="tab2-button" tabindex="-1">Collaboration</button>
+                        <button type="button" class="qne-tab-button" role="tab" aria-selected="false"
+                            aria-controls="tab3-content-panel" data-qne-tab-target="#tab3-content-panel"
+                            id="tab3-button" tabindex="-1">Analytics</button>
+                    </div>
+                    <div id="tab1-content-panel" class="qne-tab-content qne-active" role="tabpanel"
+                        aria-labelledby="tab1-button">
+                        <h4 class="qne-h5-size">Boost Your Productivity</h4>
+                        <p>This section details features related to productivity. Streamline your workflows, manage
+                            tasks efficiently, and achieve more with our intuitive tools.</p>
+                    </div>
+                    <div id="tab2-content-panel" class="qne-tab-content" role="tabpanel" aria-labelledby="tab2-button">
+                        <h4 class="qne-h5-size">Seamless Collaboration</h4>
+                        <p>Work together effectively with integrated communication tools, shared workspaces, and
+                            real-time updates. Teamwork makes the dream work!</p>
+                    </div>
+                    <div id="tab3-content-panel" class="qne-tab-content" role="tabpanel" aria-labelledby="tab3-button">
+                        <h4 class="qne-h5-size">Insightful Analytics</h4>
+                        <p>Gain valuable insights from your data with our powerful analytics dashboard. Track progress,
+                            identify trends, and make informed decisions.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="code-block-container">
+                <pre><code class="language-html">&lt;div class="qne-tabs"&gt;
+  &lt;div class="qne-tab-list" role="tablist" aria-label="Sample Tabs"&gt;
+    &lt;button type="button" class="qne-tab-button qne-active" role="tab" aria-selected="true" 
+            aria-controls="t1-content" data-qne-tab-target="#t1-content" id="t1-btn"&gt;Tab 1&lt;/button&gt;
+    &lt;button type="button" class="qne-tab-button" role="tab" aria-selected="false" tabindex="-1"
+            aria-controls="t2-content" data-qne-tab-target="#t2-content" id="t2-btn"&gt;Tab 2&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;div id="t1-content" class="qne-tab-content qne-active" role="tabpanel" aria-labelledby="t1-btn"&gt;
+    Content for Tab 1.
+  &lt;/div&gt;
+  &lt;div id="t2-content" class="qne-tab-content" role="tabpanel" aria-labelledby="t2-btn"&gt;
+    Content for Tab 2.
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+
+            <h3 class="qne-mt-lg">Carousel / Slideshow</h3>
+            <p>A slideshow component for cycling through a series of content items, like images or promotional messages.
+                Requires JavaScript. Add <code>data-qne-interval="5000"</code> (milliseconds) to
+                <code>.qne-carousel</code> for autoplay.
+            </p>
+            <div class="component-example">
+                <div class="qne-carousel" data-qne-interval="6000" aria-roledescription="carousel"
+                    aria-label="Featured Content Slideshow">
+                    <div class="qne-carousel-inner">
+                        <div class="qne-carousel-item qne-active" role="group" aria-roledescription="slide"
+                            aria-label="Slide 1 of 3">
+                            <img src="https://placehold.co/800x400/007BFF/FFFFFF?text=Awesome+Slide+One"
+                                alt="Slide 1: Awesome Slide One">
+                            <div class="qne-carousel-item-content"
+                                style="position:absolute; bottom: 20px; left:20px; background:rgba(0,0,0,0.6); color:white; padding:10px 15px; border-radius: var(--qne-border-radius);">
+                                <h4 class="qne-h5-size qne-mb-xs">Caption for Slide 1</h4>
+                                <p class="qne-mb-0">Some descriptive text for the first slide.</p>
+                            </div>
+                        </div>
+                        <div class="qne-carousel-item" role="group" aria-roledescription="slide"
+                            aria-label="Slide 2 of 3">
+                            <img src="https://placehold.co/800x400/6C757D/FFFFFF?text=Slide+Two+Is+Here"
+                                alt="Slide 2: Slide Two Is Here">
+                        </div>
+                        <div class="qne-carousel-item" role="group" aria-roledescription="slide"
+                            aria-label="Slide 3 of 3">
+                            <div
+                                style="background-color: var(--qne-accent-light); height: 400px; display:flex; flex-direction:column; align-items:center; justify-content:center; padding: var(--qne-gap-lg); text-align:center;">
+                                <h3 style="color: var(--qne-accent-dark);">Slide 3: Text &amp; Action</h3>
+                                <p style="color: var(--qne-text-color); max-width: 500px;">This slide demonstrates using
+                                    HTML content instead of just an image, with a call to action.</p>
+                                <button type="button" class="qne-button qne-mt-md">Discover More</button>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="qne-carousel-control qne-prev"
+                        aria-label="Previous slide">&lt;</button>
+                    <button type="button" class="qne-carousel-control qne-next" aria-label="Next slide">&gt;</button>
+                    <div class="qne-carousel-indicators">
+                    </div>
+                </div>
+            </div>
+            <div class="code-block-container">
+                <pre><code class="language-html">&lt;!-- Add data-qne-interval="5000" (ms) for autoplay --&gt;
+&lt;div class="qne-carousel" aria-roledescription="carousel" aria-label="Image Slideshow"&gt;
+  &lt;div class="qne-carousel-inner"&gt;
+    &lt;div class="qne-carousel-item qne-active" role="group" aria-roledescription="slide" aria-label="1 of N"&gt;
+      &lt;img src="path/to/slide1.jpg" alt="Slide 1 Description"&gt;
+      &lt;!-- Optional: &lt;div class="qne-carousel-item-content"&gt;Caption&lt;/div&gt; --&gt;
+    &lt;/div&gt;
+    &lt;div class="qne-carousel-item" role="group" aria-roledescription="slide" aria-label="2 of N"&gt;
+      &lt;!-- Content for slide 2 (e.g., another img or custom HTML) --&gt;
+    &lt;/div&gt;
+    &lt;!-- More .qne-carousel-item elements --&gt;
+  &lt;/div&gt;
+  &lt;button type="button" class="qne-carousel-control qne-prev" aria-label="Previous slide"&gt;&amp;lt;&lt;/button&gt;
+  &lt;button type="button" class="qne-carousel-control qne-next" aria-label="Next slide"&gt;&amp;gt;&lt;/button&gt;
+  &lt;div class="qne-carousel-indicators"&gt;
+    &lt;!-- JS will populate this if present --&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+        </section>
+
+        <hr class="qne-container">
+
+        <section id="ai-guide" class="docs-section qne-container">
+            <h2>Quick Guide for AI Site Generation</h2>
+            <p>Hello AI! To generate a good-looking and functional website using the "Quick 'n Easy Styles" library,
+                please follow these guidelines:</p>
+            <ol>
+                <li>
+                    <strong>Include CSS and JS Files:</strong>
+                    <p>Ensure the generated HTML page correctly links to the library files in the
+                        <code>&lt;head&gt;</code> (for CSS) and before the closing <code>&lt;/body&gt;</code> tag (for
+                        JS, using <code>defer</code> attribute):
+                    </p>
+                    <pre><code class="language-html">&lt;!-- In &lt;head&gt; --&gt;
+&lt;link rel="stylesheet" href="quick-n-easy-styles.css"&gt;
+
+&lt;!-- Before &lt;/body&gt; --&gt;
+&lt;script src="quick-n-easy-scripts.js" defer&gt;&lt;/script&gt;</code></pre>
+                </li>
+                <li>
+                    <strong>Leverage Semantic HTML:</strong>
+                    <p>Prioritize using standard, semantic HTML5 tags (<code>&lt;header&gt;</code>,
+                        <code>&lt;nav&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;article&gt;</code>,
+                        <code>&lt;section&gt;</code>, <code>&lt;aside&gt;</code>, <code>&lt;footer&gt;</code>,
+                        <code>&lt;h1&gt;-&lt;h6&gt;</code>, <code>&lt;p&gt;</code>, <code>&lt;ul&gt;</code>,
+                        <code>&lt;ol&gt;</code>, <code>&lt;table&gt;</code>, <code>&lt;button&gt;</code>,
+                        <code>&lt;form&gt;</code>, <code>&lt;label&gt;</code>, <code>&lt;input&gt;</code>, etc.). The
+                        library provides good default styling for these, minimizing the need for extra classes for basic
+                        layout and typography.
+                    </p>
+                    <p>For navigation bars, a structure like
+                        <code>&lt;nav&gt;&lt;a class="qne-nav-brand" href="#"&gt;Brand&lt;/a&gt;&lt;ul&gt;&lt;li&gt;&lt;a href="#"&gt;Link&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/nav&gt;</code>
+                        placed within a <code>&lt;header&gt;</code> element will be automatically styled as a responsive
+                        horizontal navbar.
+                    </p>
+                </li>
+                <li>
+                    <strong>Customize with Core CSS Variables:</strong>
+                    <p>The primary method for altering the site's appearance is by overriding the 10 core CSS variables.
+                        This can be done by adding a <code>&lt;style&gt;</code> block in the HTML
+                        <code>&lt;head&gt;</code> after linking the main CSS file, or by instructing the user to modify
+                        these variables directly in <code>quick-n-easy-styles.css</code>.
+                    </p>
+                    <p>Key variables and their impact on style archetypes:</p>
+                    <ul>
+                        <li><code>--qne-bg-color</code> & <code>--qne-text-color</code>: Define the base color scheme
+                            (e.g., light-on-dark for dark mode).</li>
+                        <li><code>--qne-accent-color</code> & <code>--qne-accent-text-color</code>: Choose a vibrant or
+                            muted accent based on the desired style.</li>
+                        <li><code>--qne-border-radius</code>:
+                            <ul>
+                                <li><code>0px</code> for Brutalist, Flat, or sharp Minimalist styles.</li>
+                                <li><code>4px</code> to <code>8px</code> for modern, Material-inspired, or
+                                    general-purpose designs.</li>
+                                <li><code>16px</code> or more for very rounded, soft, or playful aesthetics.</li>
+                            </ul>
+                        </li>
+                        <li><code>--qne-shadow-definition</code>: This is CRITICAL for defining the overall aesthetic.
+                            <ul>
+                                <li><strong>Neo-Brutalism:</strong> <code>2px 2px 0px 0px var(--qne-text-color)</code>
+                                    or <code>3px 3px 0px 0px #000000</code>. Combine with bright/contrasting
+                                    <code>--qne-accent-color</code>, <code>--qne-border-radius: 0px;</code>, and a
+                                    potentially larger <code>--qne-gap-size</code> (e.g., <code>2rem</code>). Use blocky
+                                    or monospace fonts.
+                                </li>
+                                <li><strong>Minimalism/Flat:</strong> <code>none</code>. Often uses a monochromatic or
+                                    very restrained color palette. Focus on typography and white space (adjust
+                                    <code>--qne-gap-size</code>).
+                                </li>
+                                <li><strong>Material Design Inspired:</strong>
+                                    <code>0 2px 5px rgba(0,0,0,0.15), 0 1px 2px rgba(0,0,0,0.1)</code> or similar
+                                    subtle, layered shadows. Use with moderate <code>--qne-border-radius</code> (e.g.,
+                                    <code>4px</code>) and a clean sans-serif font like Roboto or system-ui.
+                                </li>
+                            </ul>
+                        </li>
+                        <li><code>--qne-gap-size</code>: Adjust for overall spacing. Larger for more "airy" or Brutalist
+                            designs, smaller for compact layouts.</li>
+                        <li><code>--qne-font-family-base</code>: Select fonts appropriate to the style (e.g., a bold
+                            sans-serif or monospace for Brutalism, a clean sans-serif for Minimalism/Material, a serif
+                            for a more traditional look).</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>Utilize Component Classes Correctly:</strong>
+                    <p>For more complex UI elements, use the provided component classes as demonstrated in the
+                        "Components" section of this documentation. Ensure the HTML structure matches the examples for
+                        proper styling and JavaScript functionality.</p>
+                    <ul>
+                        <li>Hero: <code>.qne-hero</code></li>
+                        <li>Card: <code>.qne-card</code> (can contain <code>.qne-card-title</code>,
+                            <code>.qne-card-content</code>)
+                        </li>
+                        <li>3-Column Grid: <code>.qne-grid-3col</code> (typically contains <code>.qne-card</code>
+                            elements)</li>
+                        <li>Accordion: <code>.qne-accordion</code>, <code>.qne-accordion-item</code>,
+                            <code>.qne-accordion-button</code>, <code>.qne-accordion-content</code> (JS dependent)
+                        </li>
+                        <li>Modal: <code>.qne-modal</code>, <code>.qne-modal-content</code>, etc. Trigger with
+                            <code>data-qne-modal-target="yourModalId"</code> on a button (JS dependent)
+                        </li>
+                        <li>Login/Signup Form: <code>.qne-form-container</code> (often combined with
+                            <code>.qne-card</code>), and use semantic form elements with <code>.qne-form-group</code>
+                            for label-input pairs.
+                        </li>
+                        <li>Tabs: <code>.qne-tabs</code>, <code>.qne-tab-list</code>, <code>.qne-tab-button</code>,
+                            <code>.qne-tab-content</code>. Link buttons to content panels using
+                            <code>data-qne-tab-target="#yourContentPanelId"</code> (JS dependent)
+                        </li>
+                        <li>Carousel: <code>.qne-carousel</code>, <code>.qne-carousel-inner</code>,
+                            <code>.qne-carousel-item</code>, controls, and indicators (JS dependent). Add
+                            <code>data-qne-interval="milliseconds"</code> for autoplay.
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>Example: Generating a Neo-Brutalist Style Page:</strong>
+                    <p>To create a page with a Neo-Brutalist aesthetic, you would instruct the user (or apply directly
+                        in a <code>&lt;style&gt;</code> tag) to set variables like this:</p>
+                    <pre><code class="language-css">:root {
+  --qne-bg-color: #FFFF00; /* Bright, bold background */
+  --qne-text-color: #000000; /* High contrast text */
+  --qne-accent-color: #FF00FF; /* Contrasting accent */
+  --qne-accent-text-color: #000000; /* Text on accent */
+  --qne-border-radius: 0px; /* Sharp edges */
+  --qne-shadow-definition: 3px 3px 0px 0px var(--qne-text-color); /* Hard shadow */
+  --qne-gap-size: 2rem; /* Generous spacing */
+  --qne-font-family-base: 'Courier New', Courier, monospace; /* Monospace/blocky font */
+  /* --qne-page-width and --qne-font-size-base can be default or adjusted */
+}</code></pre>
+                    <p>Then, construct the page content using semantic HTML and the QNE component classes where
+                        appropriate, ensuring clear visual hierarchy and bold calls to action, characteristic of the
+                        style.</p>
+                </li>
+            </ol>
+            <p>By adhering to these guidelines, focusing on the manipulation of core CSS variables, and correctly
+                implementing the provided components, you can generate diverse, functional, and aesthetically pleasing
+                web designs efficiently with "Quick 'n Easy Styles".</p>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="qne-container">
+            <p>&copy; <span id="currentYear"></span> Quick 'n Easy Styles. Designed for simplicity and flexibility.</p>
+        </div>
+    </footer>
+
+    <script>
+        // --- Theme Switcher JavaScript ---
+        const themeSwitcher = document.getElementById('themeSwitcher');
+        const root = document.documentElement; // Get the <html> element
+
+        // Define the theme presets with their variable overrides
+        const themes = {
+            default: { // Matches the initial CSS :root values
+                '--qne-bg-color': '#ffffff',
+                '--qne-text-color': '#333333',
+                '--qne-accent-color': '#007bff',
+                '--qne-accent-text-color': '#ffffff',
+                '--qne-page-width': '1100px',
+                '--qne-border-radius': '8px',
+                '--qne-gap-size': '1.5rem',
+                '--qne-font-size-base': '16px',
+                '--qne-font-family-base': 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif',
+                '--qne-shadow-definition': '0 4px 12px rgba(0, 0, 0, 0.1)'
+            },
+            dark_mode: {
+                '--qne-bg-color': '#1e272e', // Dark slate grey
+                '--qne-text-color': '#e0e0e0', // Light grey text
+                '--qne-accent-color': '#3498db', // Bright blue accent
+                '--qne-accent-text-color': '#ffffff',
+                '--qne-border-radius': '6px',
+                '--qne-shadow-definition': '0 5px 15px rgba(0, 0, 0, 0.3)', // More pronounced shadow for depth
+                '--qne-font-family-base': 'Inter, system-ui, sans-serif', // Clean sans-serif
+                '--qne-page-width': '1100px',
+                '--qne-gap-size': '1.6rem',
+                '--qne-font-size-base': '16px'
+            },
+            neo_brutalism: {
+                '--qne-bg-color': '#f7f7f7', // Off-white or a bold color like #FFFF00
+                '--qne-text-color': '#000000', // Black text
+                '--qne-accent-color': '#ff3366', // Bright, bold pink/red accent
+                '--qne-accent-text-color': '#000000', // Black text on accent
+                '--qne-border-radius': '0px', // No rounded corners
+                '--qne-shadow-definition': '4px 4px 0px 0px var(--qne-text-color)', // Hard, offset shadow
+                '--qne-gap-size': '2.25rem', // Larger gaps for a blocky feel
+                '--qne-font-family-base': '"Arial Black", "Arial Bold", Gadget, sans-serif', // Blocky, bold font
+                '--qne-page-width': '1000px',
+                '--qne-font-size-base': '17px' // Slightly larger base font
+            },
+            minimalist_flat: {
+                '--qne-bg-color': '#f8f9fa', // Very light grey
+                '--qne-text-color': '#212529', // Dark grey text
+                '--qne-accent-color': '#6c757d', // Muted grey accent
+                '--qne-accent-text-color': '#ffffff',
+                '--qne-border-radius': '0px', // Sharp corners
+                '--qne-shadow-definition': 'none', // No shadows
+                '--qne-gap-size': '1.75rem', // Generous whitespace
+                '--qne-font-family-base': '"Helvetica Neue", Helvetica, Arial, sans-serif', // Classic minimalist font
+                '--qne-page-width': '960px', // Often narrower content width
+                '--qne-font-size-base': '15px' // Slightly smaller, crisp font
+            },
+            material_inspired: {
+                '--qne-bg-color': '#eceff1', // Light grey, typical Material background
+                '--qne-text-color': '#263238', // Dark grey-blue text
+                '--qne-accent-color': '#009688', // Teal - a common Material accent
+                '--qne-accent-text-color': '#ffffff',
+                '--qne-border-radius': '4px', // Subtle rounding
+                '--qne-shadow-definition': '0 2px 4px rgba(0,0,0,0.1), 0 2px 8px rgba(0,0,0,0.08)', // Softer, layered shadows
+                '--qne-gap-size': '1.5rem',
+                '--qne-font-family-base': 'Roboto, "Segoe UI", Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif', // Roboto or similar
+                '--qne-page-width': '1100px',
+                '--qne-font-size-base': '16px'
+            },
+            rounded_playful: {
+                '--qne-bg-color': '#fff0f5', // Lavender blush - light playful background
+                '--qne-text-color': '#4b0082', // Indigo - contrasting text
+                '--qne-accent-color': '#ff69b4', // Hot pink accent
+                '--qne-accent-text-color': '#ffffff',
+                '--qne-border-radius': '20px', // Very rounded corners
+                '--qne-shadow-definition': '0 6px 12px rgba(0, 0, 0, 0.07)', // Soft, subtle shadow
+                '--qne-gap-size': '1.75rem',
+                '--qne-font-family-base': '"Comic Sans MS", "Chalkboard SE", "Comic Neue", cursive', // Playful font
+                '--qne-page-width': '1000px',
+                '--qne-font-size-base': '16px'
+            },
+            corporate_blue: {
+                '--qne-bg-color': '#f4f7fc',
+                '--qne-text-color': '#333a56',
+                '--qne-accent-color': '#0052cc', // Corporate Blue
+                '--qne-accent-text-color': '#ffffff',
+                '--qne-page-width': '1200px',
+                '--qne-border-radius': '4px',
+                '--qne-gap-size': '1.5rem',
+                '--qne-font-size-base': '16px',
+                '--qne-font-family-base': '"Lato", "Helvetica Neue", Helvetica, Arial, sans-serif',
+                '--qne-shadow-definition': '0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.03)'
+            }
+        };
+
+        // Function to apply a selected theme
+        function applyTheme(themeName) {
+            const selectedTheme = themes[themeName];
+            if (selectedTheme) {
+                for (const [variable, value] of Object.entries(selectedTheme)) {
+                    root.style.setProperty(variable, value);
+                }
+                // Save the selected theme to localStorage
+                localStorage.setItem('qneSelectedTheme', themeName);
+            }
+        }
+
+        // Event listener for the theme switcher dropdown
+        themeSwitcher.addEventListener('change', (event) => {
+            applyTheme(event.target.value);
+        });
+
+        // On page load, check if a theme is saved in localStorage and apply it
+        const savedTheme = localStorage.getItem('qneSelectedTheme');
+        if (savedTheme && themes[savedTheme]) {
+            themeSwitcher.value = savedTheme; // Set dropdown to saved theme
+            applyTheme(savedTheme);
+        } else {
+            applyTheme('default'); // Apply default theme if nothing is saved
+        }
+
+        // --- Update current year in footer ---
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        // --- Smooth scroll for nav links ---
+        document.querySelectorAll('header nav ul li a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    // Deactivate all nav links
+                    document.querySelectorAll('header nav ul li a').forEach(link => link.classList.remove('qne-nav-active'));
+                    // Activate clicked link
+                    this.classList.add('qne-nav-active');
+
+                    // Calculate offset for sticky header
+                    const headerOffset = document.querySelector('header').offsetHeight || 70; // Fallback offset
+                    const elementPosition = targetElement.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: "smooth"
+                    });
+                }
+            });
+        });
+
+    </script>
+    <script src="quick-n-easy-scripts.js" defer></script>
+</body>
+
+</html>

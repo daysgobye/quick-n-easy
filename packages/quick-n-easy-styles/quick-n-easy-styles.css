@@ -1,0 +1,1251 @@
+/* quick-n-easy-styles.css */
+/*
+  Quick 'n Easy Styles - A variable-driven CSS library
+  Goal: Achieve diverse aesthetics (Neo-Brutalism, Minimalism, Material, etc.)
+        by primarily adjusting a few root CSS variables.
+*/
+
+:root {
+    /* --- USER EDITABLE VARIABLES (Max 10) --- */
+    /* These are the primary variables you should tweak to change the overall look and feel. */
+
+    --qne-bg-color: #ffffff;
+    /* Page background color */
+    --qne-text-color: #333333;
+    /* Main text color */
+    --qne-accent-color: #007bff;
+    /* Primary accent color for links, buttons, highlights */
+    --qne-accent-text-color: #ffffff;
+    /* Text color for elements with accent background (e.g., buttons) */
+
+    --qne-page-width: 1100px;
+    /* Maximum width of the main content area */
+    --qne-border-radius: 8px;
+    /* Default border radius for elements like cards, buttons */
+    --qne-gap-size: 1.5rem;
+    /* Base unit for padding, margins, and layout gaps */
+    --qne-font-size-base: 16px;
+    /* Base font size for the document (affects rem units) */
+    --qne-font-family-base: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    /* Default font stack */
+    --qne-shadow-definition: 0 4px 12px rgba(0, 0, 0, 0.1);
+    /* Defines box-shadow style. Examples:
+                                                                'none' (Flat)
+                                                                '2px 2px 0px var(--qne-text-color)' (Brutalist)
+                                                                '0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)' (Material)
+                                                            */
+
+    /* --- DERIVED VARIABLES (Automatically calculated - Do not edit these directly) --- */
+    /* These variables are derived from the user-editable ones above to maintain consistency. */
+
+    /* Accent color variations */
+    --qne-accent-light: color-mix(in srgb, var(--qne-accent-color) 70%, white);
+    --qne-accent-dark: color-mix(in srgb, var(--qne-accent-color) 70%, black);
+
+    /* Text & Border color variations */
+    --qne-text-muted-color: color-mix(in srgb, var(--qne-text-color) 65%, var(--qne-bg-color));
+    --qne-border-color: color-mix(in srgb, var(--qne-text-color) 15%, var(--qne-bg-color));
+
+    /* Surface color for elements like cards, modals, slightly off the main background */
+    --qne-surface-color: color-mix(in srgb, var(--qne-bg-color) 95%, var(--qne-text-color));
+
+    /* Spacing system based on --qne-gap-size */
+    --qne-gap-xs: calc(var(--qne-gap-size) * 0.25);
+    --qne-gap-sm: calc(var(--qne-gap-size) * 0.5);
+    --qne-gap-md: var(--qne-gap-size);
+    /* Base gap */
+    --qne-gap-lg: calc(var(--qne-gap-size) * 1.5);
+    --qne-gap-xl: calc(var(--qne-gap-size) * 2);
+
+    /* Typographic scale based on --qne-font-size-base */
+    --qne-h1-size: calc(var(--qne-font-size-base) * 2.5);
+    --qne-h2-size: calc(var(--qne-font-size-base) * 2);
+    --qne-h3-size: calc(var(--qne-font-size-base) * 1.75);
+    --qne-h4-size: calc(var(--qne-font-size-base) * 1.5);
+    --qne-h5-size: calc(var(--qne-font-size-base) * 1.25);
+    --qne-h6-size: var(--qne-font-size-base);
+    /* h6 is same as base font size */
+}
+
+/* --- BASIC RESET & DEFAULTS --- */
+/* A simple reset for consistency across browsers. */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    /* Modern box model */
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: var(--qne-font-size-base);
+    /* Set base font size on html for rem units */
+    scroll-behavior: smooth;
+    /* Smooth scrolling for anchor links */
+    -webkit-font-smoothing: antialiased;
+    /* Improve font rendering on WebKit */
+    -moz-osx-font-smoothing: grayscale;
+    /* Improve font rendering on Firefox */
+}
+
+body {
+    font-family: var(--qne-font-family-base);
+    background-color: var(--qne-bg-color);
+    color: var(--qne-text-color);
+    line-height: 1.6;
+    /* Readable line height */
+    display: flex;
+    flex-direction: column;
+    /* Allows footer to stick to bottom */
+    min-height: 100vh;
+    /* Full viewport height */
+}
+
+main {
+    flex-grow: 1;
+    /* Takes up available space, pushing footer down */
+    max-width: var(--qne-page-width);
+    width: 90%;
+    /* Responsive width with a fallback */
+    margin: var(--qne-gap-lg) auto;
+    /* Center main content with top/bottom margin */
+    padding: 0 var(--qne-gap-md);
+    /* Side padding for content within main */
+}
+
+/* --- SEMANTIC ELEMENT STYLING (Class-less) --- */
+/* Styles for common HTML tags, requiring no extra classes for basic layout. */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin-top: var(--qne-gap-lg);
+    margin-bottom: var(--qne-gap-sm);
+    line-height: 1.2;
+    /* Tighter line height for headings */
+    font-weight: 600;
+    /* Default bold for headings */
+}
+
+h1 {
+    font-size: var(--qne-h1-size);
+}
+
+h2 {
+    font-size: var(--qne-h2-size);
+}
+
+h3 {
+    font-size: var(--qne-h3-size);
+}
+
+h4 {
+    font-size: var(--qne-h4-size);
+}
+
+h5 {
+    font-size: var(--qne-h5-size);
+}
+
+h6 {
+    font-size: var(--qne-h6-size);
+}
+
+p {
+    margin-bottom: var(--qne-gap-md);
+}
+
+a {
+    color: var(--qne-accent-color);
+    text-decoration: none;
+    /* Cleaner look, hover provides underline */
+    transition: color 0.2s ease;
+}
+
+a:hover,
+a:focus {
+    color: var(--qne-accent-dark);
+    text-decoration: underline;
+}
+
+ul,
+ol {
+    margin-bottom: var(--qne-gap-md);
+    padding-left: var(--qne-gap-lg);
+    /* Indentation for lists */
+}
+
+li {
+    margin-bottom: var(--qne-gap-sm);
+}
+
+img,
+svg,
+video,
+picture {
+    max-width: 100%;
+    /* Responsive media */
+    height: auto;
+    /* Maintain aspect ratio */
+    display: block;
+    /* Remove extra space below images */
+    border-radius: var(--qne-border-radius);
+    /* Consistent rounding */
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background: var(--qne-border-color);
+    margin: var(--qne-gap-lg) 0;
+}
+
+blockquote {
+    margin: var(--qne-gap-md) 0;
+    padding: var(--qne-gap-md);
+    border-left: 4px solid var(--qne-accent-light);
+    background-color: var(--qne-surface-color);
+    border-radius: 0 var(--qne-border-radius) var(--qne-border-radius) 0;
+    box-shadow: var(--qne-shadow-definition);
+}
+
+blockquote p:last-child {
+    margin-bottom: 0;
+}
+
+blockquote footer {
+    margin-top: var(--qne-gap-sm);
+    font-size: 0.9em;
+    color: var(--qne-text-muted-color);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: var(--qne-gap-md);
+    box-shadow: var(--qne-shadow-definition);
+    border-radius: var(--qne-border-radius);
+    overflow: hidden;
+    /* Ensures border-radius clips table contents */
+    border: 1px solid var(--qne-border-color);
+    /* For brutalist style with 0 radius */
+}
+
+th,
+td {
+    padding: var(--qne-gap-sm) var(--qne-gap-md);
+    text-align: left;
+    border-bottom: 1px solid var(--qne-border-color);
+}
+
+th {
+    background-color: var(--qne-surface-color);
+    font-weight: 600;
+}
+
+tbody tr:nth-child(even) {
+    background-color: color-mix(in srgb, var(--qne-surface-color) 50%, var(--qne-bg-color));
+}
+
+tbody tr:hover {
+    background-color: var(--qne-accent-light);
+    color: var(--qne-accent-text-color);
+    /* Ensure text is readable on hover */
+}
+
+tbody tr:hover a {
+    /* Make links in hovered rows adapt */
+    color: var(--qne-accent-dark);
+}
+
+
+/* Form Elements */
+button,
+input[type="button"],
+input[type="submit"],
+input[type="reset"],
+.qne-button {
+    /* Class for styling <a> tags or other elements as buttons */
+    display: inline-block;
+    padding: var(--qne-gap-sm) var(--qne-gap-md);
+    font-size: inherit;
+    font-family: var(--qne-font-family-base);
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    border: 1px solid transparent;
+    /* Default to no border, can be overridden by themes */
+    border-radius: var(--qne-border-radius);
+    background-color: var(--qne-accent-color);
+    color: var(--qne-accent-text-color);
+    box-shadow: var(--qne-shadow-definition);
+    transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+}
+
+button:hover,
+input[type="button"]:hover,
+input[type="submit"]:hover,
+input[type="reset"]:hover,
+.qne-button:hover {
+    background-color: var(--qne-accent-dark);
+    transform: translateY(-1px);
+    /* Subtle lift effect */
+    box-shadow: color-mix(in srgb, var(--qne-shadow-definition) 70%, black);
+    /* Darken shadow on hover */
+}
+
+button:active,
+input[type="button"]:active,
+input[type="submit"]:active,
+input[type="reset"]:active,
+.qne-button:active {
+    transform: translateY(0px);
+    /* Remove lift on active */
+}
+
+/* Secondary button style */
+.qne-button-secondary {
+    background-color: var(--qne-surface-color);
+    color: var(--qne-text-color);
+    border: 1px solid var(--qne-border-color);
+}
+
+.qne-button-secondary:hover {
+    background-color: color-mix(in srgb, var(--qne-surface-color) 80%, var(--qne-text-color));
+    border-color: color-mix(in srgb, var(--qne-border-color) 80%, var(--qne-text-color));
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="search"],
+input[type="tel"],
+input[type="url"],
+input[type="number"],
+textarea,
+select {
+    width: 100%;
+    padding: var(--qne-gap-sm);
+    margin-bottom: var(--qne-gap-md);
+    /* Default spacing below inputs */
+    border: 1px solid var(--qne-border-color);
+    border-radius: var(--qne-border-radius);
+    background-color: var(--qne-bg-color);
+    /* Match page background or slightly off for inputs */
+    color: var(--qne-text-color);
+    font-family: var(--qne-font-family-base);
+    font-size: inherit;
+    box-shadow: var(--qne-shadow-definition);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="search"]:focus,
+input[type="tel"]:focus,
+input[type="url"]:focus,
+input[type="number"]:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    border-color: var(--qne-accent-color);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--qne-accent-color) 30%, transparent);
+    /* Focus ring */
+}
+
+label {
+    display: block;
+    margin-bottom: var(--qne-gap-xs);
+    font-weight: 600;
+}
+
+fieldset {
+    border: 1px solid var(--qne-border-color);
+    padding: var(--qne-gap-md);
+    border-radius: var(--qne-border-radius);
+    margin-bottom: var(--qne-gap-md);
+}
+
+legend {
+    padding: 0 var(--qne-gap-sm);
+    font-weight: 600;
+    color: var(--qne-text-color);
+}
+
+/* --- NAVIGATION BAR (Semantic Styling) --- */
+/* Styles <nav> elements, especially a list of links inside, without needing classes. */
+header {
+    /* Assume nav is usually in a header */
+    background-color: var(--qne-surface-color);
+    padding: var(--qne-gap-sm) 0;
+    box-shadow: var(--qne-shadow-definition);
+    border-bottom: 1px solid var(--qne-border-color);
+    position: sticky;
+    /* Sticky header */
+    top: 0;
+    z-index: 100;
+    /* Ensure it's above other content */
+}
+
+nav {
+    max-width: var(--qne-page-width);
+    margin: 0 auto;
+    /* Center nav content */
+    padding: 0 var(--qne-gap-md);
+    /* Side padding for nav content */
+    display: flex;
+    justify-content: space-between;
+    /* Example: logo left, links right */
+    align-items: center;
+    min-height: calc(var(--qne-gap-size) * 2);
+    /* Ensure enough height */
+}
+
+nav ul {
+    /* Targets <ul> directly inside <nav> */
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: var(--qne-gap-xs);
+    /* Small gap between nav items */
+}
+
+nav ul li {
+    margin: 0;
+    /* Reset li margin */
+}
+
+nav ul li a {
+    padding: var(--qne-gap-sm) var(--qne-gap-md);
+    text-decoration: none;
+    color: var(--qne-text-color);
+    display: block;
+    border-radius: var(--qne-border-radius);
+    font-weight: 500;
+    /* Slightly bolder than normal text */
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+nav ul li a:hover,
+nav ul li a:focus,
+nav ul li a.qne-nav-active {
+    /* Class for indicating the active page */
+    background-color: var(--qne-accent-color);
+    color: var(--qne-accent-text-color);
+    text-decoration: none;
+}
+
+/* Optional class for a brand/logo text or link in the nav */
+nav .qne-nav-brand {
+    font-size: var(--qne-h4-size);
+    font-weight: bold;
+    text-decoration: none;
+    color: var(--qne-text-color);
+    padding: var(--qne-gap-sm) 0;
+    /* Align with nav links padding */
+}
+
+nav .qne-nav-brand:hover {
+    color: var(--qne-accent-color);
+}
+
+
+/* --- FOOTER --- */
+footer {
+    background-color: var(--qne-surface-color);
+    color: var(--qne-text-muted-color);
+    text-align: center;
+    padding: var(--qne-gap-lg) var(--qne-gap-md);
+    border-top: 1px solid var(--qne-border-color);
+    margin-top: var(--qne-gap-xl);
+    /* Ensure space above footer */
+}
+
+footer p {
+    margin: 0;
+    font-size: calc(var(--qne-font-size-base) * 0.9);
+}
+
+footer a {
+    color: var(--qne-accent-color);
+}
+
+footer a:hover,
+footer a:focus {
+    color: var(--qne-accent-dark);
+}
+
+/* --- COMPONENTS (Class-based) --- */
+/* These components require specific classes to be applied in the HTML. */
+
+/* Card Component */
+.qne-card {
+    background-color: var(--qne-surface-color);
+    border: 1px solid var(--qne-border-color);
+    border-radius: var(--qne-border-radius);
+    padding: var(--qne-gap-md);
+    box-shadow: var(--qne-shadow-definition);
+    margin-bottom: var(--qne-gap-md);
+    /* Default spacing below cards */
+    display: flex;
+    /* For better internal alignment if needed */
+    flex-direction: column;
+    /* Stack card content vertically */
+}
+
+.qne-card-title {
+    /* Specific styling for h* tags within a card */
+    font-size: var(--qne-h4-size);
+    /* Example: card titles are H4 */
+    margin-top: 0;
+    /* Remove default heading margin if it's the first child */
+    margin-bottom: var(--qne-gap-sm);
+    color: var(--qne-text-color);
+    /* Ensure it uses the main text color or a specific card title color */
+}
+
+.qne-card img {
+    /* Image specific to a card, e.g., at the top */
+    margin-bottom: var(--qne-gap-md);
+    /* Space below image if it's before text */
+    /* Ensure image respects card radius if it's at the very top/bottom and card is rounded */
+    border-radius: calc(var(--qne-border-radius) - 1px) calc(var(--qne-border-radius) - 1px) 0 0;
+    /* If image is first element */
+}
+
+.qne-card-content {
+    flex-grow: 1;
+    /* Allows content to fill space, useful for equal height cards in a grid */
+}
+
+.qne-card-content p:last-child {
+    margin-bottom: 0;
+    /* Remove margin from last paragraph in card content */
+}
+
+.qne-card .qne-button {
+    margin-top: var(--qne-gap-md);
+    /* Space above button if it's at the bottom */
+}
+
+/* Hero Section Component */
+.qne-hero {
+    background-color: var(--qne-accent-light);
+    /* Or a specific hero bg var, or surface color */
+    padding: var(--qne-gap-xl) var(--qne-gap-md);
+    text-align: center;
+    border-radius: var(--qne-border-radius);
+    margin-bottom: var(--qne-gap-xl);
+    /* Space below hero section */
+    box-shadow: var(--qne-shadow-definition);
+}
+
+.qne-hero h1 {
+    /* Hero heading is typically larger */
+    font-size: calc(var(--qne-h1-size) * 1.3);
+    color: var(--qne-accent-dark);
+    /* Or a color that contrasts well with hero bg */
+    margin-top: 0;
+    margin-bottom: var(--qne-gap-md);
+}
+
+.qne-hero p {
+    /* Subtitle/description in hero */
+    font-size: var(--qne-h5-size);
+    color: color-mix(in srgb, var(--qne-accent-dark) 85%, var(--qne-accent-light));
+    /* Readable on hero bg */
+    margin-bottom: var(--qne-gap-lg);
+    max-width: 700px;
+    /* Keep hero text from becoming too wide */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.qne-hero .qne-button {
+    /* CTA button in hero */
+    font-size: var(--qne-h5-size);
+    /* Larger button text */
+    padding: var(--qne-gap-md) var(--qne-gap-lg);
+    /* Larger button padding */
+}
+
+/* 3-Column Info Cards / Pricing Tiers Component */
+.qne-grid-3col {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+    /* Responsive columns */
+    gap: var(--qne-gap-md);
+    margin-bottom: var(--qne-gap-lg);
+}
+
+/* This component typically uses .qne-card for its individual items. */
+/* Ensure cards in grid can have equal height if desired */
+.qne-grid-3col .qne-card {
+    height: 100%;
+    /* Make cards in grid take full height of their row */
+}
+
+
+/* Accordion Component */
+.qne-accordion {
+    margin-bottom: var(--qne-gap-lg);
+}
+
+.qne-accordion-item {
+    border: 1px solid var(--qne-border-color);
+    border-radius: var(--qne-border-radius);
+    margin-bottom: var(--qne-gap-sm);
+    overflow: hidden;
+    /* Crucial for smooth animation and containing border-radius */
+    box-shadow: var(--qne-shadow-definition);
+    background-color: var(--qne-surface-color);
+    /* Background for the whole item */
+}
+
+.qne-accordion-item:last-child {
+    margin-bottom: 0;
+}
+
+.qne-accordion-button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: var(--qne-gap-md);
+    background-color: transparent;
+    /* Inherits from item or can be specific */
+    color: var(--qne-text-color);
+    border: none;
+    /* Button itself has no border, item has it */
+    border-bottom: 1px solid transparent;
+    /* Placeholder for transition */
+    text-align: left;
+    cursor: pointer;
+    font-size: var(--qne-h5-size);
+    font-weight: 600;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.qne-accordion-item.qne-active>.qne-accordion-button {
+    /* Style for active button */
+    background-color: var(--qne-accent-light);
+    color: var(--qne-accent-dark);
+    /* Or a color that contrasts well */
+    border-bottom-color: var(--qne-border-color);
+    /* Separator when open */
+}
+
+.qne-accordion-button:hover,
+.qne-accordion-button:focus {
+    background-color: color-mix(in srgb, var(--qne-surface-color) 80%, var(--qne-text-color));
+    outline: none;
+}
+
+.qne-accordion-button::after {
+    /* Arrow indicator */
+    content: '\\25BC';
+    /* Unicode for down arrow ▼ */
+    font-size: 0.8em;
+    margin-left: var(--qne-gap-sm);
+    transition: transform 0.3s ease;
+}
+
+.qne-accordion-item.qne-active .qne-accordion-button::after {
+    transform: rotate(180deg);
+    /* Rotates to up arrow ▲ */
+}
+
+.qne-accordion-content {
+    background-color: var(--qne-bg-color);
+    /* Content area background, usually page bg */
+    max-height: 0;
+    /* Initially hidden */
+    overflow: hidden;
+    transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+    /* Smooth transition */
+}
+
+.qne-accordion-content-inner {
+    /* Inner div for actual padding */
+    padding: 0 var(--qne-gap-md);
+    /* Padding applied when open */
+}
+
+.qne-accordion-item.qne-active .qne-accordion-content {
+    /* max-height is set by JS based on scrollHeight */
+    /* Padding applied to inner div when active */
+}
+
+.qne-accordion-item.qne-active .qne-accordion-content-inner {
+    padding-top: var(--qne-gap-md);
+    padding-bottom: var(--qne-gap-md);
+}
+
+
+/* Modal Component */
+.qne-modal {
+    display: none;
+    /* Hidden by default, shown by JS */
+    position: fixed;
+    /* Stays in place */
+    z-index: 1000;
+    /* Sits on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    /* Enable scroll if content is too long */
+    background-color: rgba(0, 0, 0, 0.6);
+    /* Dimming overlay */
+    align-items: center;
+    /* Vertical centering */
+    justify-content: center;
+    /* Horizontal centering */
+    padding: var(--qne-gap-md);
+    /* Padding for smaller screens */
+}
+
+.qne-modal.qne-modal-open {
+    display: flex;
+    /* Use flex for centering when open */
+}
+
+.qne-modal-content {
+    background-color: var(--qne-surface-color);
+    margin: auto;
+    /* Centering for older browsers, flex handles modern */
+    padding: var(--qne-gap-lg);
+    border: 1px solid var(--qne-border-color);
+    border-radius: var(--qne-border-radius);
+    box-shadow: var(--qne-shadow-definition), 0 0 40px rgba(0, 0, 0, 0.25);
+    /* Stronger shadow for modal */
+    width: 100%;
+    /* Responsive width */
+    max-width: 600px;
+    /* Max width for the modal */
+    position: relative;
+    /* For positioning the close button */
+    animation: qne-modal-fadein 0.3s ease-out;
+}
+
+@keyframes qne-modal-fadein {
+
+    /* Simple fade-in and slight slide-up animation */
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.qne-modal-close {
+    color: var(--qne-text-muted-color);
+    position: absolute;
+    top: var(--qne-gap-sm);
+    right: var(--qne-gap-md);
+    font-size: var(--qne-h2-size);
+    /* Large, easy to click */
+    font-weight: bold;
+    line-height: 1;
+    /* Ensure consistent height */
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.qne-modal-close:hover,
+.qne-modal-close:focus {
+    color: var(--qne-text-color);
+    text-decoration: none;
+    outline: none;
+}
+
+.qne-modal-header {
+    margin-bottom: var(--qne-gap-md);
+    padding-bottom: var(--qne-gap-md);
+    border-bottom: 1px solid var(--qne-border-color);
+}
+
+.qne-modal-header h2,
+.qne-modal-header h3 {
+    /* Common heading levels for modal titles */
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.qne-modal-body {
+    margin-bottom: var(--qne-gap-lg);
+    max-height: 60vh;
+    /* Limit body height and allow scroll within modal body */
+    overflow-y: auto;
+}
+
+.qne-modal-footer {
+    text-align: right;
+    padding-top: var(--qne-gap-md);
+    border-top: 1px solid var(--qne-border-color);
+}
+
+.qne-modal-footer .qne-button {
+    margin-left: var(--qne-gap-sm);
+}
+
+.qne-modal-footer .qne-button:first-child {
+    margin-left: 0;
+}
+
+/* Login/Signup Form Container (can use .qne-card as a base or stand alone) */
+.qne-form-container {
+    max-width: 450px;
+    /* Typical width for a login form */
+    margin: var(--qne-gap-xl) auto;
+    /* Centered on page with top/bottom margin */
+    /* If not using .qne-card, add these: */
+    /* padding: var(--qne-gap-lg); */
+    /* background-color: var(--qne-surface-color); */
+    /* border-radius: var(--qne-border-radius); */
+    /* box-shadow: var(--qne-shadow-definition); */
+}
+
+.qne-form-container h2 {
+    /* Form title */
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: var(--qne-gap-lg);
+}
+
+.qne-form-group {
+    /* Wrapper for label + input */
+    margin-bottom: var(--qne-gap-md);
+}
+
+.qne-form-group:last-of-type {
+    /* No margin for the last group before submit usually */
+    margin-bottom: var(--qne-gap-lg);
+}
+
+.qne-form-container button[type="submit"] {
+    width: 100%;
+    /* Full-width submit button */
+    padding: var(--qne-gap-md);
+    /* Larger padding for main action button */
+}
+
+.qne-form-footer {
+    /* For links like "Forgot password?", "Sign up" */
+    text-align: center;
+    margin-top: var(--qne-gap-lg);
+    font-size: calc(var(--qne-font-size-base) * 0.9);
+}
+
+.qne-form-footer p {
+    margin-bottom: var(--qne-gap-xs);
+}
+
+
+/* Tabs Component */
+.qne-tabs {
+    border: 1px solid var(--qne-border-color);
+    border-radius: var(--qne-border-radius);
+    box-shadow: var(--qne-shadow-definition);
+    background-color: var(--qne-surface-color);
+    /* Overall background for tabs component */
+    margin-bottom: var(--qne-gap-lg);
+    overflow: hidden;
+    /* Ensures border-radius is respected by children */
+}
+
+.qne-tab-list {
+    display: flex;
+    border-bottom: 1px solid var(--qne-border-color);
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    background-color: color-mix(in srgb, var(--qne-surface-color) 85%, var(--qne-bg-color));
+    /* Slightly different bg for tab bar */
+    overflow-x: auto;
+    /* Allow horizontal scroll if too many tabs */
+    white-space: nowrap;
+    /* Prevent tabs from wrapping */
+}
+
+.qne-tab-button {
+    padding: var(--qne-gap-md) var(--qne-gap-lg);
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+    color: var(--qne-text-muted-color);
+    font-size: inherit;
+    font-family: var(--qne-font-family-base);
+    font-weight: 500;
+    border-bottom: 3px solid transparent;
+    /* Indicator for active tab */
+    margin-bottom: -1px;
+    /* Aligns with the tab list's bottom border */
+    transition: color 0.2s ease, border-color 0.2s ease;
+    flex-shrink: 0;
+    /* Prevent tabs from shrinking if container is too small */
+}
+
+.qne-tab-button:hover,
+.qne-tab-button:focus {
+    color: var(--qne-text-color);
+    outline: none;
+}
+
+.qne-tab-button.qne-active {
+    color: var(--qne-accent-color);
+    border-bottom-color: var(--qne-accent-color);
+    font-weight: 600;
+}
+
+.qne-tab-content {
+    display: none;
+    /* Hidden by default, shown by JS */
+    padding: var(--qne-gap-lg);
+    /* background-color: var(--qne-surface-color); /* Content area background */
+}
+
+.qne-tab-content.qne-active {
+    display: block;
+    animation: qne-content-fadein 0.4s ease-out;
+    /* Fade-in for content */
+}
+
+@keyframes qne-content-fadein {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Carousel Component (Basic) */
+.qne-carousel {
+    position: relative;
+    /* For positioning controls and indicators */
+    overflow: hidden;
+    /* Hides parts of items that are off-screen */
+    border-radius: var(--qne-border-radius);
+    box-shadow: var(--qne-shadow-definition);
+    background-color: var(--qne-surface-color);
+    /* Fallback background */
+    margin-bottom: var(--qne-gap-lg);
+}
+
+.qne-carousel-inner {
+    display: flex;
+    /* Lays out items in a row */
+    transition: transform 0.5s ease-in-out;
+    /* Smooth sliding animation */
+}
+
+.qne-carousel-item {
+    min-width: 100%;
+    /* Each item takes full width of the carousel */
+    box-sizing: border-box;
+    /* Example styling for item content, can be customized */
+    /* display: flex; */
+    /* align-items: center; */
+    /* justify-content: center; */
+    /* height: 400px; /* Example fixed height */
+}
+
+.qne-carousel-item img {
+    width: 100%;
+    height: auto;
+    /* Or a fixed height like '400px' */
+    object-fit: cover;
+    /* Cover the area, may crop */
+    display: block;
+    border-radius: 0;
+    /* Images inside carousel usually don't need their own radius */
+}
+
+.qne-carousel-item-content {
+    /* For text or other elements over/within a slide */
+    padding: var(--qne-gap-lg);
+    /* Example: position absolute for captions over images */
+    /* position: absolute; bottom: 0; left: 0; width: 100%; background: rgba(0,0,0,0.5); color: white; */
+}
+
+.qne-carousel-control {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.4);
+    color: white;
+    border: none;
+    padding: var(--qne-gap-sm) var(--qne-gap-md);
+    cursor: pointer;
+    border-radius: var(--qne-border-radius);
+    font-size: var(--qne-h4-size);
+    z-index: 10;
+    /* Above carousel items */
+    opacity: 0.8;
+    transition: opacity 0.2s ease, background-color 0.2s ease;
+}
+
+.qne-carousel-control:hover,
+.qne-carousel-control:focus {
+    opacity: 1;
+    background-color: rgba(0, 0, 0, 0.6);
+    outline: none;
+}
+
+.qne-carousel-control.qne-prev {
+    left: var(--qne-gap-md);
+}
+
+.qne-carousel-control.qne-next {
+    right: var(--qne-gap-md);
+}
+
+.qne-carousel-indicators {
+    position: absolute;
+    bottom: var(--qne-gap-md);
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: var(--qne-gap-sm);
+    z-index: 10;
+    /* Above carousel items */
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.qne-carousel-indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    /* Circular indicators */
+    background-color: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    padding: 0;
+    /* Reset button padding */
+    transition: background-color 0.2s ease;
+}
+
+.qne-carousel-indicator.qne-active {
+    background-color: var(--qne-accent-color);
+    /* Or white for better visibility on dark images */
+    border-color: var(--qne-accent-dark);
+}
+
+
+/* --- UTILITY CLASSES (Optional but often helpful) --- */
+.qne-text-center {
+    text-align: center !important;
+}
+
+.qne-text-left {
+    text-align: left !important;
+}
+
+.qne-text-right {
+    text-align: right !important;
+}
+
+.qne-mt-0 {
+    margin-top: 0 !important;
+}
+
+.qne-mb-0 {
+    margin-bottom: 0 !important;
+}
+
+/* Add more spacing utilities as needed, e.g., .qne-mt-sm, .qne-pb-lg etc. */
+.qne-mt-xs {
+    margin-top: var(--qne-gap-xs) !important;
+}
+
+.qne-mb-xs {
+    margin-bottom: var(--qne-gap-xs) !important;
+}
+
+.qne-mt-sm {
+    margin-top: var(--qne-gap-sm) !important;
+}
+
+.qne-mb-sm {
+    margin-bottom: var(--qne-gap-sm) !important;
+}
+
+.qne-mt-md {
+    margin-top: var(--qne-gap-md) !important;
+}
+
+.qne-mb-md {
+    margin-bottom: var(--qne-gap-md) !important;
+}
+
+.qne-mt-lg {
+    margin-top: var(--qne-gap-lg) !important;
+}
+
+.qne-mb-lg {
+    margin-bottom: var(--qne-gap-lg) !important;
+}
+
+.qne-mt-xl {
+    margin-top: var(--qne-gap-xl) !important;
+}
+
+.qne-mb-xl {
+    margin-bottom: var(--qne-gap-xl) !important;
+}
+
+.qne-pt-0 {
+    padding-top: 0 !important;
+}
+
+.qne-pb-0 {
+    padding-bottom: 0 !important;
+}
+
+/* ... and so on for padding utilities */
+
+.qne-d-none {
+    display: none !important;
+}
+
+/* For hiding elements */
+.qne-d-block {
+    display: block !important;
+}
+
+.qne-d-flex {
+    display: flex !important;
+}
+
+.qne-d-grid {
+    display: grid !important;
+}
+
+
+/* Container class for full-width sections that need centered content */
+.qne-container {
+    max-width: var(--qne-page-width);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--qne-gap-md);
+    padding-right: var(--qne-gap-md);
+    width: 100%;
+    /* Ensure it takes full width up to max-width */
+}
+
+/* For full-width sections (e.g. hero that spans entire viewport width) */
+.qne-section-fullwidth {
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+}
+
+.qne-section-fullwidth>.qne-container {
+    /* To re-center content within a full-width section */
+    margin-top: 0;
+    /* Reset if needed */
+    margin-bottom: 0;
+}
+
+/* Style for code blocks showing HTML examples */
+.code-block-container {
+    margin-bottom: var(--qne-gap-lg);
+}
+
+.code-block-container pre {
+    background-color: #282c34;
+    /* Dark background for code blocks */
+    color: #abb2bf;
+    /* Light text for contrast */
+    padding: var(--qne-gap-md);
+    border-radius: var(--qne-border-radius);
+    overflow-x: auto;
+    /* Allow horizontal scrolling for long code lines */
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+    font-size: 0.875em;
+    /* Slightly smaller font for code blocks */
+    line-height: 1.5;
+    box-shadow: var(--qne-shadow-definition);
+}
+
+.code-block-container pre code {
+    background: none;
+    padding: 0;
+    border: none;
+}
+
+.code-block-container pre .token.comment,
+.code-block-container pre .token.prolog,
+.code-block-container pre .token.doctype,
+.code-block-container pre .token.cdata {
+    color: #5c6370;
+}
+
+.code-block-container pre .token.punctuation {
+    color: #abb2bf;
+}
+
+.code-block-container pre .token.property,
+.code-block-container pre .token.tag,
+.code-block-container pre .token.boolean,
+.code-block-container pre .token.number,
+.code-block-container pre .token.constant,
+.code-block-container pre .token.symbol,
+.code-block-container pre .token.deleted {
+    color: #e06c75;
+}
+
+.code-block-container pre .token.selector,
+.code-block-container pre .token.attr-name,
+.code-block-container pre .token.string,
+.code-block-container pre .token.char,
+.code-block-container pre .token.builtin,
+.code-block-container pre .token.inserted {
+    color: #98c379;
+}
+
+.code-block-container pre .token.operator,
+.code-block-container pre .token.entity,
+.code-block-container pre .token.url,
+.code-block-container pre .language-css .token.string,
+.code-block-container pre .style .token.string {
+    color: #56b6c2;
+}
+
+.code-block-container pre .token.atrule,
+.code-block-container pre .token.attr-value,
+.code-block-container pre .token.keyword {
+    color: #c678dd;
+}
+
+.code-block-container pre .token.function,
+.code-block-container pre .token.class-name {
+    color: #61afef;
+}
+
+.code-block-container pre .token.regex,
+.code-block-container pre .token.important,
+.code-block-container pre .token.variable {
+    color: #d19a66;
+}
